@@ -1,0 +1,30 @@
+name: Version Bump in Consumer
+
+on:
+  workflow_dispatch:
+    inputs:
+      sdk:
+        description: "SDK to be released"
+        required: true
+        default: "sdk1"
+      version:
+        description: "Release Version"
+        required: true
+      consumer:
+        description: "Repository where SDK is consumed"
+        required: true
+        default: "consumer-A"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check inputs
+        run: |
+          echo ${{ github.event.inputs.sdk }}
+          echo ${{ github.event.inputs.version }}          
+          echo ${{ github.event.inputs.consumer }}
+          
