@@ -43,7 +43,7 @@ jobs:
       - name: Get Consumers for Selected SDK
         id: get-consumers-from-json
         run: |
-          JSON=$(cat ../../consumers.json)
+          JSON=$(cat ../consumers.json)
           echo "::set-output name=consumersFromJson::${JSON//'%'/'%25'}"
           echo consumersFromJson
           
