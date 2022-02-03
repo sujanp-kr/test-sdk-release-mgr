@@ -12,7 +12,7 @@ on:
           - lodash
         description: "Library to bump"
         required: true
-        default: "sdk1"
+        default: "lodash"
       version:
         description: "Release Version"
         required: true
