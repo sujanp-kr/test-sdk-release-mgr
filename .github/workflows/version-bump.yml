@@ -74,7 +74,7 @@ jobs:
         id: global_data
         run: |
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
-          echo "::set-output name=repo::$(yarn run --silent cli print-sdk-repo --sdk ${{ matrix.target }})"
+          #echo "::set-output name=repo::$(yarn run --silent cli print-sdk-repo --sdk ${{ matrix.target }})"
       
       - name: Checkout ${{ matrix.target }}
         uses: actions/checkout@v2
