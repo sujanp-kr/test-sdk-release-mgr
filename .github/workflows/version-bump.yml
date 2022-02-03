@@ -9,6 +9,7 @@ on:
         options:
           - sdk1
           - sdk2
+          - lodash
         description: "Library to bump"
         required: true
         default: "sdk1"
