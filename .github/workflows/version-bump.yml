@@ -42,10 +42,12 @@ jobs:
       
       - name: Get Consumers for Selected SDK
         id: get-consumers-from-json
-        run: |
-          JSON=$(cat ./consumers.json)
-          echo "::set-output name=consumersFromJson::${JSON//'%'/'%25'}"
-          echo consumersFromJson
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'consumers.json'
+          prop_path: '${{ github.event.inputs.sdk }}'
+          
+      - run: echo ${{steps.get_consumers_from_json.outputs.prop}}
           
       - name: Get Consumers for Selected SDK
         id: get-consumers
