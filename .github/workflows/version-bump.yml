@@ -60,7 +60,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [consumer-A, consumer-B]
+        target: [consumer-A, consumer-B] #TODO - why ${{needs.get_consumers_for_sdk.outputs.consumers}} complains for type.
     steps:
       - name: Check inputs
         run: |
@@ -68,4 +68,24 @@ jobs:
           echo ${{ github.event.inputs.version }}
           echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
           echo "Working with ${{ matrix.target }}"
+          
+      - name: Set Global Data
+        id: global_data
+        run: |
+          echo "::set-output name=date::$(date +'%Y-%m-%d')"
+          echo "::set-output name=repo::$(yarn run --silent cli print-sdk-repo --sdk ${{ matrix.target }})"
+      
+      - name: Checkout ${{ matrix.target }}
+        uses: actions/checkout@v2
+        with:
+          token: ${{secrets.TOKEN}}
+          repository: sujanp-kr/${{ matrix.target }}
+          path: ${{ matrix.target }}
+          
+      - name: Update SDK version
+        run: |
+          cd ${{ matrix.target }}
+          yarn add -D ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
+          cat package.json
+      
           
