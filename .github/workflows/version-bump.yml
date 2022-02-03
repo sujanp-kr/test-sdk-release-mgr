@@ -39,16 +39,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.17.6
+#       - name: Setup Node
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 14.17.6
           
-      - name: Install Yarn
-        run: npm indtall -g yarn
+#       - name: Install Yarn
+#         run: npm indtall -g yarn
         
-      - name: Install Depndencies
-        run: yarn
+#       - name: Install Depndencies
+#         run: yarn
         
       - name: Get Consumers for Input SDK
         id: get-consumers
@@ -60,7 +60,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ${{needs.get_consumers_for_sdk.outputs.consumers}}
+        target: [consumer-A, consumer-B]
     steps:
       - name: Check inputs
         run: |
