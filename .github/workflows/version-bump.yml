@@ -38,7 +38,7 @@ jobs:
       consumers: ${{steps.get-consumers.outputs.consumers}}
 
     steps:
-#       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       
       - name: Get Consumers for Selected SDK
         id: get-consumers-from-json
