@@ -6,7 +6,7 @@ on:
     inputs:
       sdk:
         type: choice
-        options:
+        options: #No support yet to have dynamic inputs, say types from a json file.
           - sdk1
           - sdk2
           - lodash
@@ -38,22 +38,19 @@ jobs:
       consumers: ${{steps.get-consumers.outputs.consumers}}
 
     steps:
-      - uses: actions/checkout@v2
+#       - uses: actions/checkout@v2
       
-#       - name: Setup Node
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: 14.17.6
+      - name: Get Consumers for Selected SDK
+        id: get-consumers-from-json
+        run: |
+          JSON=$(cat ../../consumers.json)
+          echo "::set-output name=consumersFromJson::${JSON//'%'/'%25'}"
+          echo consumersFromJson
           
-#       - name: Install Yarn
-#         run: npm indtall -g yarn
-        
-#       - name: Install Depndencies
-#         run: yarn
-        
-      - name: Get Consumers for Input SDK
+      - name: Get Consumers for Selected SDK
         id: get-consumers
-        run: echo "::set-output name=consumers::[\"consumer-A\", \"consumer-B\"]"
+        run: |
+          echo "::set-output name=consumers::[\"consumer-A\", \"consumer-B\"]"
 
   bump-consumer:
     runs-on: ubuntu-latest
