@@ -47,11 +47,10 @@ jobs:
           path: 'consumers.json'
           prop_path: '${{ github.event.inputs.sdk }}'
           
-      - run: echo ${{steps.get_consumers_from_json.outputs.prop}}
-          
       - name: Get Consumers for Selected SDK
         id: get-consumers
         run: |
+          echo ${{steps.get_consumers_from_json.outputs.prop}}
           echo "::set-output name=consumers::[\"consumer-A\", \"consumer-B\"]"
 
   bump-consumer:
