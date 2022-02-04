@@ -43,7 +43,8 @@ jobs:
       - name: Get Consumers for Selected SDK
         id: get_consumers
         run: |
-          echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
+          echo '::set-output name=consumers::[\"consumer-A\", \"consumer-B\"]'
+#         echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
           
   bump-consumer:
     runs-on: ubuntu-latest
@@ -51,7 +52,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdf: ${{needs.get_consumers_for_sdk.outputs.consumers}}
+        target: ${{needs.get_consumers_for_sdk.outputs.consumers}}
     steps:
       - name: Check inputs
         run: |
