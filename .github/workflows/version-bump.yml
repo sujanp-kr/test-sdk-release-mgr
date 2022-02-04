@@ -43,7 +43,7 @@ jobs:
       - name: Get Consumers for Selected SDK
         id: get-consumers
         run: |
-          mtx=$( consumers.json | jq '.${{github.event.inputs.sdk}}' )
+          mtx=$( jq -r '.${{github.event.inputs.sdk}}' <<< consumers.json )
           echo "::set-output name=consumers::$mtx"
 
 #   bump-consumer:
