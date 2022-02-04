@@ -49,7 +49,7 @@ jobs:
           ls -la
           cd ..
           ls -la
-          mtx=$( jq '.${{github.event.inputs.sdk}}' <<< $(cat ../../consumers.json) )
+          mtx=$( jq '.${{github.event.inputs.sdk}}' <<< $(cat consumers.json) )
           echo "::set-output name=consumers::$mtx"
 
 #   bump-consumer:
