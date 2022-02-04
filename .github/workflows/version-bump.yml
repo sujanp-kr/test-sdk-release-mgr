@@ -43,9 +43,10 @@ jobs:
       - name: Get Consumers for Selected SDK
         id: get_consumers
         run: |
-          csr=$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))
-          echo 
           echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
+#         csr=$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))
+#         echo 
+          
           
       - run: |
           echo ${{steps.get_consumers.outputs.consumers}}
