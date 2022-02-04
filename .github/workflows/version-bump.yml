@@ -44,7 +44,7 @@ jobs:
         id: get-consumers
         run: |
           echo $(consumers.json)
-          mtx=$( echo $consumers.json) | jq '.${{github.event.inputs.sdk}}')
+          mtx=$( jq '.${{github.event.inputs.sdk}}' <<< $(cat consumers.json) )
           echo "::set-output name=consumers::$mtx"
 
 #   bump-consumer:
