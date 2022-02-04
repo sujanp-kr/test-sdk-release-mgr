@@ -35,13 +35,13 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      consumers: ${{steps.get-consumers.outputs.consumers}}
+      consumers: ${{steps.get_consumers.outputs.consumers}}
 
     steps:
       - uses: actions/checkout@v2
           
       - name: Get Consumers for Selected SDK
-        id: get-consumers
+        id: get_consumers
         run: |
           echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
 
@@ -51,7 +51,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [consumer-A, consumer-B] #TODO - why ${{needs.get_consumers_for_sdk.outputs.consumers}} complains for type.
+        target: [$(needs.get_consumers.outputs.consumers)]
+#       target: ${{fromJson(needs.get_consumers.outputs.consumers)}}
+
     steps:
       - name: Check inputs
         run: |
