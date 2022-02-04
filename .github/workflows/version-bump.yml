@@ -44,16 +44,14 @@ jobs:
         id: get_consumers
         run: |
           echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
-
+          
   bump-consumer:
     runs-on: ubuntu-latest
     needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
       matrix:
-        target: [$(needs.get_consumers.outputs.consumers)]
-#       target: ${{fromJson(needs.get_consumers.outputs.consumers)}}
-
+        sdf: ${{needs.get_consumers_for_sdk.outputs.consumers}}
     steps:
       - name: Check inputs
         run: |
