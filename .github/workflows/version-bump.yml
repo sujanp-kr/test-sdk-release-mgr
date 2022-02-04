@@ -45,7 +45,7 @@ jobs:
         uses: notiz-dev/github-action-json-property@release
         with:
           path: 'consumers.json'
-          prop_path: '${{ github.event.inputs.sdk }}'
+          prop_path: 'sdk1' #'${{ github.event.inputs.sdk }}'
           
       - name: Get Consumers for Selected SDK
         id: get-consumers
