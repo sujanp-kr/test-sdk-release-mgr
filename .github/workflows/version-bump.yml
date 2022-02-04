@@ -34,7 +34,7 @@ jobs:
   get_consumers_for_sdk:
     runs-on: ubuntu-latest
     
-    outputs:
+#     outputs:
 #       consumers: ${{steps.get-consumers.outputs.consumers}}
 
     steps:
