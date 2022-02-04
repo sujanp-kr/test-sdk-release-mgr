@@ -46,7 +46,7 @@ jobs:
           pwd
           ls -la
           cat consumers.json
-#         mtx=$( jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json) )
+          jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json)
 #         echo "::set-output name=consumers::$mtx"
 
 #   bump-consumer:
