@@ -45,12 +45,9 @@ jobs:
         run: |
           pwd
           ls -la
-          cd ..
-          ls -la
-          cd ..
-          ls -la
-          mtx=$( jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json) )
-          echo "::set-output name=consumers::$mtx"
+          cat consumers.json
+#         mtx=$( jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json) )
+#         echo "::set-output name=consumers::$mtx"
 
 #   bump-consumer:
 #     runs-on: ubuntu-latest
