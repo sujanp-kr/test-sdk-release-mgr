@@ -40,14 +40,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
           
-      - name: Get Consumers for Selected SDK
-        id: get_consumers
+#       - name: Get Consumers for Selected SDK
+#         id: get_consumers
+#         run: |
+#           csr=$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))
+#           echo 
+#           echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
+          
+#       - run: |
+#           echo ${{steps.get_consumers.outputs.consumers}}
+
+      - id: get-token
         run: |
-          echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
-          
-      - run: |
-          echo ${{steps.get_consumers.outputs.consumers}}
-          
+          token=$( $(cat ./consumers.json) | jq '.${{github.event.inputs.sdk}}' )
+          echo "::set-output name=auth_token::$token"
+
+      - run: echo ${{ steps.get-token.outputs.auth_token }}
+
 #   bump-consumer:
 #     runs-on: ubuntu-latest
 #     needs: get_consumers_for_sdk
