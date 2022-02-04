@@ -34,28 +34,17 @@ jobs:
   get_consumers_for_sdk:
     runs-on: ubuntu-latest
     
-#     outputs:
-#       consumers: ${{steps.get-consumers.outputs.consumers}}
+    outputs:
+      consumers: ${{steps.get-consumers.outputs.consumers}}
 
     steps:
-      - uses: actions/checkout@v2
-      
-#       - name: Get Consumers for Selected SDK
-#         id: get-consumers-from-json
-#         uses: notiz-dev/github-action-json-property@release
-#         with:
-#           path: 'consumers.json'
-#           prop_path: 'sdk1' #'${{ github.event.inputs.sdk }}'
-
-          #echo ${{steps.get_consumers_from_json.outputs.prop}}
-          #echo "::set-output name=consumers::[\"consumer-A\", \"consumer-B\"]"
+#       - uses: actions/checkout@v2
           
       - name: Get Consumers for Selected SDK
         id: get-consumers
         run: |
-          echo $(jq '.${{github.event.inputs.sdk}}' consumers.json)
-          
-#         echo "::set-output consumers=$mtx"
+          mtx=$(jq '.${{github.event.inputs.sdk}}' consumers.json)
+          echo "::set-output consumers=$mtx"
 
 #   bump-consumer:
 #     runs-on: ubuntu-latest
