@@ -44,7 +44,7 @@ jobs:
             prop_path: '${{ github.event.inputs.sdk }}'
       - run: |
           export CONSUMERS=${{steps.get_consumers.outputs.prop}}
-          echo "::set-output name=consumers::${CONSUMERS}
+          echo "::set-output name=consumers::${CONSUMERS}"
               
     outputs:
       consumers: ${{steps.get_consumers.outputs.consumers}}
