@@ -23,7 +23,7 @@ jobs:
           path: 'consumers.json'
           prop_path: 'sdk1'
     - run: |
-        export CONSUMERS="${steps.get_consumers.outputs.prop}"
+        export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
         echo "::set-output name=consumers::${CONSUMERS}"
 #     export GIT_PR_SHA_SHORT="${GIT_PR_SHA:0:10}"
 #     echo "::set-output name=git_pr_sha::${GIT_PR_SHA}"
