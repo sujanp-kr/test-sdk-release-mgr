@@ -34,21 +34,21 @@ jobs:
   get_consumers_for_sdk:
     runs-on: ubuntu-latest
     
-    outputs:
-      consumers: ${{steps.get_consumers.outputs.consumers}}
-
     steps:
       - uses: actions/checkout@v2
       
-      - name: get consumers
-        id: get_consumers
+      - id: get_consumers
         uses: notiz-dev/github-action-json-property@release
         with: 
             path: 'consumers.json'
             prop_path: '${{ github.event.inputs.sdk }}'
       - run: |
-          echo ${{steps.get_consumers.outputs.prop}} 
-          echo "::set-output name=consumers::$(${{steps.get_consumers.outputs.prop}})"
+          export CONSUMERS=${{steps.get_consumers.outputs.prop}}
+          echo "::set-output name=consumers::${CONSUMERS}
+              
+    outputs:
+      consumers: ${{steps.get_consumers.outputs.consumers}}
+
           
 #       - name: Get Consumers for Selected SDK
 #         id: get_consumers
