@@ -37,18 +37,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - id: get_consumers
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-            path: 'consumers.json'
-            prop_path: '${{ github.event.inputs.sdk }}'
-      - run: |
+#       - id: get_consumers
+#         uses: notiz-dev/github-action-json-property@release
+#         with: 
+#             path: 'consumers.json'
+#             prop_path: '${{ github.event.inputs.sdk }}'
+#       - run: |
           
-          export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
-          echo "::set-output name=consumers::${{CONSUMERS}}"
-              
+#           export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
+#           echo "::set-output name=consumers::${{CONSUMERS}}"
+    
+      - id: jq_consumers
+        run: |
+          export jqcs=$(jq '.lodash' <<< $(cat ./consumers.json))
+          echo "jq export: ${jqcs}"
+          echo "::set-output name=jqConsumers::${jqcs}"
+ 
     outputs:
-      consumers: ${{steps.get_consumers.outputs.consumers}}
+      jqConsumers: ${{ steps.jq_consumers.outputs.jqConsumers }}
+    
+#     outputs:
+#       consumers: ${{steps.get_consumers.outputs.consumers}}
 
           
 #       - name: Get Consumers for Selected SDK
@@ -70,7 +79,7 @@ jobs:
         run: |
           echo ${{ github.event.inputs.sdk }}
           echo ${{ github.event.inputs.version }}
-          echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
+          echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.jqConsumers}}"
 #         ${{fromJSON(needs.job1.outputs.matrix)}}
 #         echo "Working with ${{ matrix.target }}"
 
@@ -81,7 +90,7 @@ jobs:
       fail-fast: false
       matrix: #${{needs.get_consumers_for_sdk.outputs.consumers}}
 #       target: [consumer-A, consumer-B]
-        target: "${{needs.get_consumers_for_sdk.outputs.consumers}}"
+        target: "${{needs.get_consumers_for_sdk.outputs.jqConsumers}}"
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
         
     steps:
