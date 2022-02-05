@@ -45,7 +45,7 @@ jobs:
       - run: |
           
           export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
-          echo "::set-output name=consumers::${CONSUMERS}"
+          echo "::set-output name=consumers::{\"include\":[{\"project\":\"consumer-A\"},{\"project\":\"consumer-B\"}]}"
               
     outputs:
       consumers: ${{steps.get_consumers.outputs.consumers}}
@@ -70,7 +70,8 @@ jobs:
         run: |
           echo ${{ github.event.inputs.sdk }}
           echo ${{ github.event.inputs.version }}
-          echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
+          echo "Got matrix: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}"
+#         ${{fromJSON(needs.job1.outputs.matrix)}}
 #         echo "Working with ${{ matrix.target }}"
 
 #   bump-consumer:
