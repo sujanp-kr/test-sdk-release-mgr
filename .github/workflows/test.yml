@@ -21,7 +21,7 @@ jobs:
       uses: notiz-dev/github-action-json-property@release
       with: 
           path: 'consumers.json'
-          prop_path: 'sdk1'
+          prop_path: 'lodash'
     - run: |
         export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
         echo "dollar consumers ${CONSUMERS}"
