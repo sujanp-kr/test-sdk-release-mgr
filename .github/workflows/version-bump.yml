@@ -90,7 +90,7 @@ jobs:
       fail-fast: false
       matrix: #${{needs.get_consumers_for_sdk.outputs.consumers}}
 #       target: [consumer-A, consumer-B]
-        target: "${{needs.get_consumers_for_sdk.outputs.jqConsumers}}"
+        target: "${{fromJson(needs.get_consumers_for_sdk.outputs.jqConsumers)}}"
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
         
     steps:
