@@ -1,4 +1,4 @@
-name: build
+name: Test Matrix
 on: push
 jobs:
   job1:
@@ -14,4 +14,4 @@ jobs:
     strategy:
       matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
     steps:
-      - run: build
+      - run: echo ${{matrix}}
