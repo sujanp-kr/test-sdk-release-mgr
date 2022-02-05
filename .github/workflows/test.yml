@@ -1,24 +1,27 @@
-name: default
-
+name: Demonstration
 on:
   workflow_dispatch:
   
 jobs:
+  first-job:
+    runs-on: ubuntu-latest  
+    steps:
+    - id: identify
+      run: |
+        # use bash variable expression to get the substring
+        export GIT_PR_SHA="${{ github.sha }}"
+        export GIT_PR_SHA_SHORT="${GIT_PR_SHA:0:10}"
 
-  setup:
-    runs-on: ubuntu-latest
+        echo "::set-output name=git_pr_sha::${GIT_PR_SHA}"
+        echo "::set-output name=git_pr_sha_short::${GIT_PR_SHA_SHORT}"
     outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
-    steps:
-      - id: matrix
-        run: |
-          echo '::set-output name=value::[\"a\", \"b\", \"c\"]'
-  build:
-    needs: [ setup ]
+      git_pr_sha: ${{ steps.identify.outputs.git_pr_sha }}
+      git_pr_sha_short: ${{ steps.identify.outputs.git_pr_sha_short }}
+
+  second-job:
+    needs: first-job
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        value: ${{fromJson(needs.setup.outputs.matrix)}}
     steps:
-      - run: |
-          echo "${{ matrix.value }}"
+    - run: |
+        echo "${{ needs.first-job.outputs.git_pr_sha }}"
+        echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
