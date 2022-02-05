@@ -41,14 +41,14 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: get version
-        id: version
+        id: get_consumers
         uses: notiz-dev/github-action-json-property@release
         with: 
             path: 'consumers.json'
             prop_path: '${{ github.event.inputs.sdk }}'
       - run: |
           echo ${{steps.version.outputs.prop}} 
-          echo "::set-output name=consumers::${{steps.version.outputs.prop}}"
+          echo "::set-output name=consumers::${{steps.get_consumers.outputs.prop}}"
           
 #       - name: Get Consumers for Selected SDK
 #         id: get_consumers
@@ -57,7 +57,8 @@ jobs:
 #         echo 
                 
 #       - run: |
-#           echo ${{steps.get_consumers.outputs.consumers}}
+#       echo ${{steps.get_consumers.outputs.consumers}}
+#       echo ${{fromJson(needs.get_consumers_for)}}
 
   bump-consumer:
     runs-on: ubuntu-latest
