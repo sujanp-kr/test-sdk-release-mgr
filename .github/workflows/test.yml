@@ -5,7 +5,9 @@ on:
 jobs:
   first-job:
     runs-on: ubuntu-latest  
+    
     steps:
+    - uses: actions/checkout@v2
     - id: identify
       run: |
         # use bash variable expression to get the substring
@@ -14,10 +16,21 @@ jobs:
 
         echo "::set-output name=git_pr_sha::${GIT_PR_SHA}"
         echo "::set-output name=git_pr_sha_short::${GIT_PR_SHA_SHORT}"
+
+    - id: get_consumers
+      uses: notiz-dev/github-action-json-property@release
+      with: 
+          path: 'consumers.json'
+          prop_path: '${{ github.event.inputs.sdk }}'
+    - run: |
+        export CONSUMERS=${{ steps.get_consumers.outputs.prop }}
+        echo "::set-output name=consumers::${CONSUMERS}"
+      
     outputs:
       git_pr_sha: ${{ steps.identify.outputs.git_pr_sha }}
       git_pr_sha_short: ${{ steps.identify.outputs.git_pr_sha_short }}
-
+      consumers: ${{ steps.get_consumers.outputs.consumers }}
+    
   second-job:
     needs: first-job
     runs-on: ubuntu-latest
@@ -25,3 +38,4 @@ jobs:
     - run: |
         echo "${{ needs.first-job.outputs.git_pr_sha }}"
         echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
+        echo "${{ needs.first-job.outputs.consumers }}"
