@@ -21,7 +21,7 @@ jobs:
       uses: notiz-dev/github-action-json-property@release
       with: 
           path: 'consumers.json'
-          prop_path: '${{ github.event.inputs.sdk }}'
+          prop_path: 'lodash'
     - run: |
         export CONSUMERS=${{ steps.get_consumers.outputs.prop }}
         echo "::set-output name=consumers::${CONSUMERS}"
