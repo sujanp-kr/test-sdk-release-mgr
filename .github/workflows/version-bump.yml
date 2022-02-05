@@ -79,9 +79,9 @@ jobs:
     needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
-      matrix: ${{needs.get_consumers_for_sdk.outputs.consumers}}
+      matrix: #${{needs.get_consumers_for_sdk.outputs.consumers}}
 #       target: [consumer-A, consumer-B]
-#       target: ["${{needs.get_consumers_for_sdk.outputs.consumers}}"]
+        target: "${{needs.get_consumers_for_sdk.outputs.consumers}}"
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
         
     steps:
