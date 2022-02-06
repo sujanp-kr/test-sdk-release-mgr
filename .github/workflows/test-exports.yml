@@ -44,9 +44,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo "${{ needs.first-job.outputs.git_pr_sha }}"
-        echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
-        echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
-        echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
         echo "fromJSON jq export: ${{ fromJson(needs.first-job.outputs.jqConsumers) }}"
-        echo "fromJson notiz export: ${{ fromJson(needs.first-job.outputs.consumersNoitzDev) }}"
+#     echo "fromJson notiz export: ${{ fromJson(needs.first-job.outputs.consumersNoitzDev) }}"
+#     echo "${{ needs.first-job.outputs.git_pr_sha }}"
+#     echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
+#     echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
+#     echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
