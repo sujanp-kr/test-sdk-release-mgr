@@ -53,10 +53,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo "from GITHUB_ENV: GITHUB_SHA_SHORT"
-        echo "${{ needs.first-job.outputs.git_pr_sha }}"
-        echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
-        echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
-        echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
-        echo "fromJson notiz export: ${{ fromJson(needs.first-job.outputs.consumersNoitzDev) }}"
-        echo "fromJson jq export: ${{ fromJson(needs.first-job.outputs.jqConsumers) }}"
+        echo "from GITHUB_ENV: $GITHUB_SHA_SHORT"
+#     echo "${{ needs.first-job.outputs.git_pr_sha }}"
+#     echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
+#     echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
+#     echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
+#     echo "fromJson notiz export: ${{ fromJson(needs.first-job.outputs.consumersNoitzDev) }}"
+#     echo "fromJson jq export: ${{ fromJson(needs.first-job.outputs.jqConsumers) }}"
