@@ -46,6 +46,7 @@ jobs:
           
           export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
           echo "notz export: $CONSUMERS"
+          echo "$CONSUMERS" >> $GITHUB_ENV
           echo "::set-output name=consumers::$CONSUMERS"
     
 #       - id: jq_consumers
@@ -75,6 +76,7 @@ jobs:
     steps:
       - name: Check inputs
         run: |
+          echo "From env.: ${{ env.CONSUMERS }}"
           echo ${{ github.event.inputs.sdk }}
           echo ${{ github.event.inputs.version }}
           echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
