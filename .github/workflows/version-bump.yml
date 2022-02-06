@@ -49,7 +49,7 @@ jobs:
     
       - id: jq_consumers
         run: |
-          export jqcs=$(jq '.lodash' <<< $(cat ./consumers-donotedit.json))
+          export jqcs=$(jq '.lodash' <<< $(cat ./consumers.json) | awk '{gsub(/\"/,"\\\"");}')
           echo "jq export: ${jqcs}"
           echo "::set-output name=jqConsumers::${jqcs}"
  
