@@ -1,8 +1,18 @@
 {
-  "sdk1": [{"consumer": "consumer-A"}],
-  "sdk2": [{"consumer": "consumer-B"}],
-  "lodash": [
+  "sdk1": {
+    "consumers": [
+         {"consumer": "consumer-A"}
+      ]
+  },
+  "sdk2": {
+    "consumers": [
+         {"consumer": "consumer-B"}
+      ]
+  },
+  "lodash": {
+    "consumers": [
          {"consumer": "consumer-A"},
          {"consumer": "consumer-B"}
       ]
+  }
 }
