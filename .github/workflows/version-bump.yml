@@ -40,7 +40,7 @@ jobs:
       - id: get_consumers
         uses: notiz-dev/github-action-json-property@release
         with: 
-            path: 'consumers.json'
+            path: 'consumers-donotedit.json'
             prop_path: '${{ github.event.inputs.sdk }}'
       - run: |
           
