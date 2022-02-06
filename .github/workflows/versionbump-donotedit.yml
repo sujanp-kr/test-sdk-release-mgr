@@ -17,6 +17,12 @@ on:
         description: "Release Version" 
         required: true
         default: "4.17.21"
+        
+        
+env:
+  sdk1: consumer-A
+  sdk2: consumer-B
+  lodash: "[consumer-A, consumer-B]"
 
 # Avoiding this for now since no multi-select in github workflow yet; 
 # Also to reduce complexity to change consumer list based on sdk choice above
@@ -65,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        target: ["consumer-A", "consumer-B"]
+        target: [consumer-A, consumer-B]
         
     steps:
 
