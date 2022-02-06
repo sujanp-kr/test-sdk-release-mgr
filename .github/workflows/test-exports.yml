@@ -34,6 +34,13 @@ jobs:
         export jqcs=$(jq '.lodash' <<< $(cat ./consumers.json))
         echo "jq export: ${jqcs}"
         echo "::set-output name=jqConsumers::${jqcs}"
+        
+    - name: Set env
+      run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+    - name: Test
+      run: | 
+          echo $GITHUB_SHA_SHORT
+          echo "github_env: $GITHUB_SHA_SHORT"
  
     outputs:
       git_pr_sha: ${{ steps.identify.outputs.git_pr_sha }}
@@ -46,9 +53,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
+        echo "from GITHUB_ENV: $CONSUMERS"
+        echo "${{ needs.first-job.outputs.git_pr_sha }}"
+        echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
+        echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
+        echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
         echo "fromJson notiz export: ${{ fromJson(needs.first-job.outputs.consumersNoitzDev) }}"
         echo "fromJson jq export: ${{ fromJson(needs.first-job.outputs.jqConsumers) }}"
-#     echo "${{ needs.first-job.outputs.git_pr_sha }}"
-#     echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
-#     echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
-#     echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
