@@ -17,15 +17,15 @@ jobs:
         echo "::set-output name=git_pr_sha::${GIT_PR_SHA}"
         echo "::set-output name=git_pr_sha_short::${GIT_PR_SHA_SHORT}"
 
-#     - id: get_consumers
-#       uses: notiz-dev/github-action-json-property@release
-#       with: 
-#           path: 'consumers.json'
-#           prop_path: 'lodash'
-#     - run: |
-#         export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
-#         echo "dollar consumers ${CONSUMERS}"
-#         echo "::set-output name=consumers::${CONSUMERS}"
+    - id: get_consumers
+      uses: notiz-dev/github-action-json-property@release
+      with: 
+          path: 'consumers.json'
+          prop_path: 'lodash'
+    - run: |
+        export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
+        echo "notiz export: ${CONSUMERS}"
+        echo "::set-output name=consumers::${CONSUMERS}"
         
     - id: jq_consumers
       run: |
@@ -36,7 +36,7 @@ jobs:
     outputs:
       git_pr_sha: ${{ steps.identify.outputs.git_pr_sha }}
       git_pr_sha_short: ${{ steps.identify.outputs.git_pr_sha_short }}
-#   consumersNoitzDev: ${{ steps.get_consumers.outputs.consumers }}
+      consumersNoitzDev: ${{ steps.get_consumers.outputs.consumers }}
       jqConsumers: ${{ steps.jq_consumers.outputs.jqConsumers }}
     
   second-job:
@@ -46,5 +46,5 @@ jobs:
     - run: |
         echo "${{ needs.first-job.outputs.git_pr_sha }}"
         echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
-        echo "${{ needs.first-job.outputs.jqConsumers }}"
-#     echo "${{ needs.first-job.outputs.consumersNoitzDev }}"
+        echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
+        echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
