@@ -2,7 +2,7 @@ name: Test Exports
 on:
   push:
     paths:
-      - 'test-exports.yml'
+      - '.github/workflows/test-exports.yml'
   
 jobs:
   first-job:
