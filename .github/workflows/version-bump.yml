@@ -46,7 +46,7 @@ jobs:
           
           export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
           echo "notz export: ${jqcs}"
-          echo "::set-output name=consumers::${{CONSUMERS}}"
+          echo "::set-output name=consumers::${CONSUMERS}"
     
 #       - id: jq_consumers
 #         run: |
