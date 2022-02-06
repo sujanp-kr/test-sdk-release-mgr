@@ -36,4 +36,6 @@ jobs:
         run: |
           echo ${{ github.event.inputs.sdk }}
           echo ${{ env.lodash }}
-          echo ${{ env.${{github.event.inputs.sdk}} }}
+          echo "INPUTT=${{ env.lodash }}" >> $GITHUB_ENV
+          echo $INPUTT
+          echo ${{ env.$INPUTT }}
