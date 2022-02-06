@@ -26,7 +26,8 @@ env:
   sdk2: sdk2
   lodash: lodash  
   inputSdk: ${{ github.event.inputs.sdk }}
-  
+  #multi-consumer-output-format
+  lodashOutput: '{\"include\":[{\"project\":\"consumer-A\"},{\"project\":\"consumer-B\"}]}'
   
 jobs:
   
@@ -44,9 +45,16 @@ jobs:
         run: |
           if [ ${{env.inputSdk}} == ${{env.sdk1}} ]
           then
-            echo "outputting sdk1"
-          else
-            echo "Not sdk1"
+            echo "outputting ${{env.sdk1}}"
+            echo "::set-output name=consumers::${{env.sdk1}}"
+          elif [ ${{env.inputSdk}} == ${{env.sdk2}} ]
+          then
+            echo "outputting ${{env.sdk2}}"
+            echo "::set-output name=consumers::${{env.sdk2}}"
+          elif [ ${{env.inputSdk}} == ${{env.lodash}} ]
+          then
+            echo "outputting ${{env.lodashOutput}}"
+            echo "::set-output name=consumers::${{env.lodashOutput}}"
           fi
           
 # echo ${{ env.$INPUTT }} #not valid.
