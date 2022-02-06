@@ -30,7 +30,7 @@ env:
 jobs:
   
   map-env:
-    runson: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: check input to env
         run: |
