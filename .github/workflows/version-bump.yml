@@ -79,7 +79,7 @@ jobs:
         run: |
           echo ${{ github.event.inputs.sdk }}
           echo ${{ github.event.inputs.version }}
-          echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
+          echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.jqConsumers}}"
 #         ${{fromJSON(needs.job1.outputs.matrix)}}
 #         echo "Working with ${{ matrix.target }}"
 
