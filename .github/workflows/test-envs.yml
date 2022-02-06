@@ -34,6 +34,6 @@ jobs:
     steps:
       - name: check input to env
         run: |
-          echo ${{ github.events.input.sdk }}
-          echo ${{ env.sdk1 }}
+          echo ${{ github.event.inputs.sdk }}
           echo ${{ env.lodash }}
+          echo ${{ env.${{github.event.inputs.sdk}} }}
