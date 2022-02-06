@@ -42,7 +42,7 @@ jobs:
           
       - name: IF Input, then output
         run: |
-          if [ env.inputSdk == env.sdk1]
+          if [ ${{env.inputSdk}} == ${{env.sdk1}} ]
           then
             echo "outputting sdk1"
           else
