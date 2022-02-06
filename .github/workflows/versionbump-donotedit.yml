@@ -45,7 +45,6 @@ jobs:
       - run: |
           export notz="${{steps.notiz_consumers.outputs.prop}}"
           echo "notiz export: ${notz}"
-          echo "N_CONSUMERS=
           echo "::set-output name=nConsumers::${notz}"
     
       - id: jq_consumers
