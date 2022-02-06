@@ -1,5 +1,9 @@
-{
-   "sdk1": "consumer-A",
-   "sdk2":[ "consumer-B" ],
-   "lodash": ["consumer-A","consumer-B"]
-}
+[
+  {"sdk1": [{"consumer": "consumer-A"}]},
+  {"sdk2": [{"consumer": "consumer-B"}]},
+  {"lodash": [
+         {"consumer": "consumer-A"},
+         {"consumer": "consumer-B"}
+      ]
+  }
+]
