@@ -27,7 +27,11 @@ env:
   lodash: lodash  
   inputSdk: ${{ github.event.inputs.sdk }}
   #multi-consumer-output-format
-  lodashOutput: '{\"include\":[{\"project\":\"consumer-A\"},{\"project\":\"consumer-B\"}]}'
+  outputs: 
+      sdk1: consumer-A
+      sdk2: consumer-B
+      lodash: '[consumer-A,consumer-B]'
+#'{\"include\":[{\"project\":\"consumer-A\"},{\"project\":\"consumer-B\"}]}'
   
 jobs:
   
@@ -48,22 +52,22 @@ jobs:
           if [ ${{env.inputSdk}} == ${{env.sdk1}} ]
           then
             echo "outputting ${{env.sdk1}}"
-            echo "::set-output name=consumers::${{env.sdk1}}"
+            echo "::set-output name=consumers::${{env.outputs.sdk1}}"
           elif [ ${{env.inputSdk}} == ${{env.sdk2}} ]
           then
             echo "outputting ${{env.sdk2}}"
-            echo "::set-output name=consumers::${{env.sdk2}}"
+            echo "::set-output name=consumers::${{env.outputs.sdk2}}"
           elif [ ${{env.inputSdk}} == ${{env.lodash}} ]
           then
             echo "outputting ${{env.lodashOutput}}"
-            echo "::set-output name=consumers::${{env.lodashOutput}}"
+            echo "::set-output name=consumers::${{env.outputs.lodash}}"
           fi
           
   bump-version:
       needs: map-env
       runs-on: ubuntu-latest
       strategy:
-        matrix: ${{fromJSON(needs.map-env.outputs.matrix)}}
+        matrix: ${{needs.map-env.outputs.matrix)}}
             
       steps:
         - run: echo "Using ${{matrix}}"
