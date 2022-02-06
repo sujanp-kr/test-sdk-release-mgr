@@ -38,4 +38,15 @@ jobs:
           echo ${{ env.lodash }}
           echo "INPUTT=${{ env.lodash }}" >> $GITHUB_ENV
           echo $INPUTT
-          echo ${{ env.$INPUTT }}
+          
+      - name: IF Input, then output
+        run: |
+          if ${{ github.event.inputs.sdk }} == 'sdk1'
+          then
+            echo "outputting ${{env.sdk1}}"
+          else
+            echo "Not sdk1"
+          fi
+          
+# echo ${{ env.$INPUTT }} #not valid.
+
