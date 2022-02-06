@@ -58,6 +58,9 @@ jobs:
           export jqcs=$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers-donotedit.json))
           echo "jq export: ${jqcs}"
           echo "::set-output name=jConsumers::${jqcs}"
+          
+      - id: env_consumers
+          echo "${{ env.${{github.events.input.sdk}}}}"
 
  
     outputs:
@@ -71,7 +74,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        target: [consumer-A, consumer-B]
+        target: ${{ env.${{github.events.input.sdk}}}}
+#         [consumer-A, consumer-B]
         
     steps:
 
