@@ -41,7 +41,7 @@ jobs:
           
       - name: IF Input, then output
         run: |
-          if [${{ github.event.inputs.sdk }} == 'sdk1']
+          if [${{ github.event.inputs.sdk }} == sdk1]
           then
             echo "outputting ${{env.sdk1}}"
           else
