@@ -31,7 +31,7 @@ jobs:
         
     - id: jq_consumers
       run: |
-        echo "JQ_CONSUMER=$(jq '.lodash' <<< $(cat ./consumers-donotedit.json))" >> $GITHUB_ENV
+        export JQ_CONSUMER=$(jq '.lodash' <<< $(cat ./consumers-donotedit.json))
         echo "jq export: $JQ_CONSUMER"
         echo "::set-output name=jqConsumers::$JQ_CONSUMER"
 #       export jqcs=$(jq '.lodash' <<< $(cat ./consumers-donotedit.json))
