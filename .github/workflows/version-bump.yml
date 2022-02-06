@@ -1,4 +1,4 @@
-name: Version Bump at Consumers
+name: Version Bump Tester
 
 on:
   #Could automate this further by a making it a workflow_call, summoned from any SDK once it has a new tag; or another cron job on a schedule.
@@ -46,7 +46,7 @@ jobs:
           
           export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
           echo "notz export: $CONSUMERS"
-          echo "$CONSUMERS" >> $GITHUB_ENV
+          #echo "$CONSUMERS" >> $GITHUB_ENV # invalid environment variable format, i.e can't set two values consumer-A, consumer B
           echo "::set-output name=consumers::$CONSUMERS"
     
 #       - id: jq_consumers
