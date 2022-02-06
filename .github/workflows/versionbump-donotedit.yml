@@ -84,7 +84,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{secrets.TOKEN}}
-          repository: ${{ matrix.target }}
+          repository: sujanp-kr/${{ matrix.target }}
           path: ${{ matrix.target }}
           
       - name: Update SDK version
@@ -115,5 +115,5 @@ jobs:
           team-reviewers: |
             owners
             maintainers
-          draft: false
+          draft: true
           
