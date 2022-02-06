@@ -64,8 +64,9 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
         matrix: ${{fromJSON(needs.map-env.outputs.matrix)}}
-            steps:
-            - run: echo "Using ${{matrix}}"
+            
+      steps:
+        - run: echo "Using ${{matrix}}"
 
 # echo ${{ env.$INPUTT }} #not valid.
 
