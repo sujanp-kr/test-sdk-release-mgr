@@ -60,7 +60,7 @@ jobs:
           echo "::set-output name=jConsumers::${jqcs}"
           
       - id: env_consumers
-          echo "${{ env.${{github.events.input.sdk}}}}"
+        run: echo "${{ env.${{github.events.input.sdk}}}}"
 
  
     outputs:
