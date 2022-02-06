@@ -48,3 +48,5 @@ jobs:
         echo "${{ needs.first-job.outputs.git_pr_sha_short }}"
         echo "jq export: ${{ needs.first-job.outputs.jqConsumers }}"
         echo "notiz export: ${{ needs.first-job.outputs.consumersNoitzDev }}"
+        echo "fromJSON jq export: ${{ fromJson(needs.first-job.outputs.jqConsumers) }}"
+        echo "fromJson notiz export: ${{ fromJson(needs.first-job.outputs.consumersNoitzDev) }}"
