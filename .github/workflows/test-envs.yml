@@ -26,11 +26,10 @@ env:
   sdk2: sdk2
   lodash: lodash  
   inputSdk: ${{ github.event.inputs.sdk }}
-  #multi-consumer-output-format
-  outputs: 
-      sdk1: consumer-A
-      sdk2: consumer-B
-      lodash: '[consumer-A,consumer-B]'
+#   outputts:  #Nesting not allowed.
+#       sdk1: consumer-A
+#       sdk2: consumer-B
+#       lodash: '[consumer-A,consumer-B]'
 #'{\"include\":[{\"project\":\"consumer-A\"},{\"project\":\"consumer-B\"}]}'
   
 jobs:
