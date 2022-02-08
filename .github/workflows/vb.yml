@@ -41,12 +41,8 @@ jobs:
     needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
-#       target: [consumer-A, consumer-B]
-#       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
-#         target:
-#           - consumer-A
-#           - consumer-B
+      matrix: 
+        target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
         
     steps:
 
@@ -55,31 +51,31 @@ jobs:
           echo "Input SDK: ${{ github.event.inputs.sdk }}"
           echo "Bump version: ${{ github.event.inputs.version }}"
           echo "Got json: ${{ needs.get_consumers_for_sdk.outputs.consumers }}"
-          echo "Matrix: ${{ matrix}}"
+          echo "Working with: ${{ matrix.target }}"
           
       - name: Set Global Data
         id: global_data
         run: |
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
       
-      - name: Checkout ${{ matrix }}
+      - name: Checkout ${{ matrix.target }}
         uses: actions/checkout@v2
         with:
           token: ${{secrets.TOKEN}}
-          repository: sujanp-kr/${{ matrix }}
-          path: ${{ matrix }}
+          repository: sujanp-kr/${{ matrix.target }}
+          path: ${{ matrix.target }}
           
       - name: Update SDK version
         run: |
-          cd ${{ matrix }}
+          cd ${{ matrix.target }}
           yarn add -D ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
           cat package.json
       
-      - name: Create Pull Request in ${{ matrix }}
+      - name: Create Pull Request in ${{ matrix.target }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.TOKEN }}
-          path: ${{ matrix }}
+          path: ${{ matrix.target }}
           commit-message: "Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
           committer: katomation <noreply@kroger.com>
           author: katomation <automation@user.noreply.kroger.com>

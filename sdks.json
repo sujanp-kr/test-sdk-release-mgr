@@ -51,7 +51,7 @@
     "htmlURL": "https://github.com/krogertechnology/behavioral-analytics-core",
     "repo": "behavioral-analytics-core",
     "weeklyUpdates": {},
-    "consumer": {
+    "consumedBy": {
       "consumers": [
         {"orgRepo": "krogertechnology/behavioral-analytics-banner"},
         {"orgRepo": "krogertechnology/behavioral-analytics-demeter"},
@@ -64,9 +64,6 @@
     "htmlURL": "",
     "repo": "Not KAT repo; Only for testing",
     "weeklyUpdates": {},
-    "consumers": {
-      "consumer-A": {},
-      "consumer-B": {}
-    }
+    "consumers": [ "consumer-A", "consumer-B" ]
   }
 }
