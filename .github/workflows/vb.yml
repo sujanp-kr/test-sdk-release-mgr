@@ -20,40 +20,43 @@ on:
 
 jobs:
 
-  get_consumers_for_sdk:
-    runs-on: ubuntu-latest
+#   get_consumers_for_sdk:
+#     runs-on: ubuntu-latest
     
-    steps:
-      - uses: actions/checkout@v2
+#     steps:
+#       - uses: actions/checkout@v2
     
-      - id: jq_consumers
-        run: |
-          echo $(jq '.lodash.consumer' <<< $(cat ./sdks.json) | tr -d '\n')
-          echo "::set-output name=consumers::$(jq '.lodash.consumer' <<< $(cat ./sdks.json) | tr -d '\n')"
+#       - id: jq_consumers
+#         run: |
+#           echo $(jq '.lodash.consumer' <<< $(cat ./sdks.json) | tr -d '\n')
+#           echo "::set-output name=consumers::$(jq '.lodash.consumer' <<< $(cat ./sdks.json) | tr -d '\n')"
  
-    outputs:
-      consumers: ${{ steps.get_consumers.outputs.consumers }}
+#     outputs:
+#       consumers: ${{ steps.get_consumers.outputs.consumers }}
 
-  check-inputs:
-    runs-on: ubuntu-latest
-    needs: get_consumers_for_sdk
-    steps:
-      - name: Check inputs
-        run: |
-          echo "From env.: ${{ env.CONSUMERS }}"
-          echo ${{ github.event.inputs.sdk }}
-          echo ${{ github.event.inputs.version }}
-          echo "Got json: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
-#         ${{fromJSON(needs.job1.outputs.matrix)}}
-#         echo "Working with ${{ matrix.target }}"
+#   check-inputs:
+#     runs-on: ubuntu-latest
+#     needs: get_consumers_for_sdk
+#     steps:
+#       - name: Check inputs
+#         run: |
+#           echo "From env.: ${{ env.CONSUMERS }}"
+#           echo ${{ github.event.inputs.sdk }}
+#           echo ${{ github.event.inputs.version }}
+#           echo "Got json: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
+# #         ${{fromJSON(needs.job1.outputs.matrix)}}
+# #         echo "Working with ${{ matrix.target }}"
 
   bump-consumer:
     runs-on: ubuntu-latest
-    needs: get_consumers_for_sdk
+#     needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
-      matrix: 
-        target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
+      matrix:
+        target:
+          - consumer-A
+          - consumer-B
+#       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #       target: [consumer-A, consumer-B]
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
         
