@@ -44,7 +44,7 @@ jobs:
           echo ${{ github.event.inputs.sdk }}
           echo ${{ github.event.inputs.version }}
           echo "Got json: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
-#         ${{fromJSON(needs.job1.outputs.matrix)}}
+          echo ${{fromJSON(needs.get_consumers_for_sdk.outputs.consumers)}}
 #         echo "Working with ${{ matrix.target }}"
 
   bump-consumer:
@@ -52,8 +52,7 @@ jobs:
     needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
-      matrix:
-        target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
+      matrix: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #       target: [consumer-A, consumer-B]
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #         target:
