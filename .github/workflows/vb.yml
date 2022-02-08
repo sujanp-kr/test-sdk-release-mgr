@@ -28,7 +28,7 @@ jobs:
     
       - id: jq_consumers
         run: |
-          echo "::set-output name=consumers::$(jq '.lodash.consumer' <<< $(cat ./consumers-donotedit.json)"
+          echo "::set-output name=consumers::$(jq '.lodash.consumer' <<< $(cat ./sdks.json)"
  
     outputs:
       consumers: ${{ steps.get_consumers.outputs.consumers }}
