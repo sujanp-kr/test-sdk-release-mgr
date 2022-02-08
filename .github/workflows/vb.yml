@@ -41,8 +41,7 @@ jobs:
     needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
-      matrix: 
-        includes: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
+      matrix: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #       target: [consumer-A, consumer-B]
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #         target:
@@ -55,7 +54,7 @@ jobs:
         run: |
           echo ${{ github.event.inputs.sdk }}
           echo ${{ github.event.inputs.version }}
-          echo "matrix.orgRepo: ${{ matrix }}"
+          echo "matrix.orgRepo: ${{ matrix.orgRepo }}"
           
       - name: Set Global Data
         id: global_data
