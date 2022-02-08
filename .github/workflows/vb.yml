@@ -49,7 +49,7 @@ jobs:
 
   bump-consumer:
     runs-on: ubuntu-latest
-#     needs: get_consumers_for_sdk
+    needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
       matrix:
