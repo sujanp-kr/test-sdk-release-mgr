@@ -1,0 +1,37 @@
+name: Beta release
+
+# This is called from other Github repos that use the template found under ./templates-for-external-use/beta-release.yml
+on:
+  workflow_call:
+    secrets:
+      token:
+        required: true
+        description: Personal access token so we can authenticate and create a release
+
+jobs:
+  create-beta-release:
+    # This only runs if a "beta-release" label is added to a PR
+    # or if a PR that already has the label is updated
+    if: ${{ github.event.label.name == 'beta-release' || contains(github.event.pull_request.labels.*.name, 'beta-release') }}
+    runs-on: ubuntu-latest
+    env:
+      # More info can be found here: https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+      pr: ${{ github.event.number }}
+      repo: ${{ github.repository }}
+    steps:
+      - name: Checkout automation code
+        uses: actions/checkout@v2
+        with:
+          repository: krogertechnology/kat-web-katomatic
+          ref: main
+          token: ${{ secrets.token }}
+      - name: Install dependecies
+        run: |
+          npm install -g yarn
+          yarn install
+      - name: Beta release
+        run: |
+          yarn cli create-beta-release \
+          --accessToken ${{ secrets.token }} \
+          --pullRequest ${{ env.pr }} \
+          --currentRepo ${{ env.repo }}

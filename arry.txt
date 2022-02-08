@@ -1,0 +1,1 @@
+[{"name":"lodash","sshURL":"","htmlURL":"","repo":"Not KAT repo; Only for testing","weeklyUpdates":{},"consumers":["sujanp-kr/consumer-A","sujanp-kr/consumer-B"]}]

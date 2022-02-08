@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createBetaRelease Should make correct calls out to Github: Comment created 1`] = `
+Array [
+  Object {
+    "body": "Beta release v1.0.1-rc.0 has been created :tada:
+github.com/repo/pulls/n",
+    "issue_number": 7,
+    "owner": "Microsoft",
+    "repo": "typescript",
+  },
+]
+`;
+
+exports[`createBetaRelease Should throw an error if a valid tag is not found 1`] = `[Error: Unable to find valid semver tag]`;

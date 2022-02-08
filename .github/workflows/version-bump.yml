@@ -1,15 +1,15 @@
-name: Version Bump Tester
+name: Version Bump at Consumer
 
 on:
-  #Could automate this further by a making it a workflow_call, summoned from any SDK once it has a new tag; or another cron job on a schedule.
   workflow_dispatch:
     inputs:
       sdk:
-        type: choice
-        options: #No support yet to have dynamic inputs, say types from a json file.
-          - sdk1
-          - sdk2
-          - lodash
+        type: choice #Its allowed on github yo! 
+        options: 
+          #No support yet to have dynamic inputs, say types from a json file.
+          #Until then we could either use a workflow_call or keep adding new libraries here.
+          - kroger-usage-metrics
+          - lodash #for testing purposes
         description: "Library to bump"
         required: true
         default: "lodash"
@@ -18,123 +18,95 @@ on:
         required: true
         default: "4.17.21"
 
-# Avoiding this for now since no multi-select in github workflow yet; 
-# Also to reduce complexity to change consumer list based on sdk choice above
-#       consumer:
-#         type: choice 
-#         options: 
-#           - Consumer-A
-#           - All 
-#         description: "Environment to Deploy to"
-#         required: true
-
-
 jobs:
-
-  get_consumers_for_sdk:
+  calculate_consumer_matrix:
     runs-on: ubuntu-latest
-    
+    outputs:
+      sdk: ${{ steps.calculate-matrix.outputs.sdksArray }}
     steps:
       - uses: actions/checkout@v2
-      
-      - id: get_consumers
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-            path: 'consumers-donotedit.json'
-            prop_path: '${{ github.event.inputs.sdk }}'
-      - run: |
-          
-          export CONSUMERS="${{steps.get_consumers.outputs.prop}}"
-          echo "notz export: $CONSUMERS"
-          #echo "$CONSUMERS" >> $GITHUB_ENV # invalid environment variable format, i.e can't set two values consumer-A, consumer B
-          echo "::set-output name=consumers::$CONSUMERS"
-    
-#       - id: jq_consumers
-#         run: |
-#           export jqcs=$(jq '.lodash' <<< $(cat ./consumers-donotedit.json) | awk '{gsub(/\"/,"\\\"");}')
-#           echo "jq export: ${jqcs}"
-#           echo "::set-output name=consumers::${jqcs}"
- 
-    outputs:
-      consumers: ${{ steps.get_consumers.outputs.consumers }}
 
-          
-#       - name: Get Consumers for Selected SDK
-#         id: get_consumers
-#         run: csr=$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))
-#         echo "::set-output name=consumers::$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers.json))"
-#         echo 
-                
-#       - run: |
-#       echo ${{steps.get_consumers.outputs.consumers}}
-#       echo ${{fromJson(needs.get_consumers_for)}}
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.17.6
 
+      - name: Install Yarn
+        run: npm install -g yarn
 
-  check-inputs:
-    runs-on: ubuntu-latest
-    needs: get_consumers_for_sdk
-    steps:
-      - name: Check inputs
+      - name: Install dependencies
+        run: yarn
+
+      - name: Calculate matrix
+        id: calculate-matrix
         run: |
-          echo "From env.: ${{ env.CONSUMERS }}"
-          echo ${{ github.event.inputs.sdk }}
-          echo ${{ github.event.inputs.version }}
-          echo "Got matrix: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
-#         ${{fromJSON(needs.job1.outputs.matrix)}}
-#         echo "Working with ${{ matrix.target }}"
+          echo "::set-output name=sdk::$(yarn run --silent cli print-sdk-matrix --sdk ${{ github.event.inputs.sdk }})"
 
-#   bump-consumer:
-#     runs-on: ubuntu-latest
-#     needs: get_consumers_for_sdk
-#     strategy:
-#       fail-fast: false
-#       matrix: 
-# #       target: [consumer-A, consumer-B]
-#         target: ${{needs.get_consumers_for_sdk.outputs.consumers}}
-# #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
-        
-#     steps:
-          
-#       - name: Set Global Data
-#         id: global_data
-#         run: |
-#           echo "::set-output name=date::$(date +'%Y-%m-%d')"
-#           #echo "::set-output name=repo::$(yarn run --silent cli print-sdk-repo --sdk ${{ matrix.target }})"
-      
-#       - name: Checkout ${{ matrix.target }}
-#         uses: actions/checkout@v2
-#         with:
-#           token: ${{secrets.TOKEN}}
-#           repository: ${{ matrix.target }}
-#           path: ${{ matrix.target }}
-          
-#       - name: Update SDK version
-#         run: |
-#           cd ${{ matrix.target }}
-#           yarn add -D ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
-#           cat package.json
-      
-#       - name: Create Pull Request in ${{ matrix.target }}
-#         uses: peter-evans/create-pull-request@v3
-#         with:
-#           token: ${{ secrets.TOKEN }}
-#           path: ${{ matrix.target }}
-#           commit-message: "Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
-#           committer: katomation <noreply@kroger.com>
-#           author: katomation <automation@user.noreply.kroger.com>
-#           signoff: false
-#           base: main
-#           branch: automation/version-bump-${{github.event.inputs.sdk}}-${{steps.global_data.outputs.date}}
-#           delete-branch: true
-#           title: "[Automation] Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
-#           body: |
-#             Bump sdk version
-#             - Updated ${{steps.global_data.outputs.date}}
-#             - Auto-generated by Katomatic
-#           labels: version-patch
-#           assignees: sujanp-kr
-#           team-reviewers: |
-#             owners
-#             maintainers
-#           draft: false
-          
+      - name: Get Consumers
+        id: get_consumers
+        run: |
+          echo "Calculated Matrix: ${{ steps.calculate-matrix.outputs.sdk }}"
+          echo "::set-output name=consumersObject::${{ fromJson(steps.calculate-matrix.outputs.sdk).consumers }}"
+
+      # - name: Print consumer outptus
+      #   run: |
+      #     echo "ConsumersArray: ${{ steps.get_consumers.outputs.consumersArray }}"
+      #     echo "ConsumersFrom Array: ${{ steps.get_consumers.outputs.consumersFromArray }}"
+
+
+  bump-version:
+    runs-on: ubuntu-latest
+    needs: calculate_consumer_matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ["sujanp-kr/consumer-A", "sujanp-kr/consumer-B"]
+        # sdk: ${{ fromJson(needs.calculate_consumer_matrix.outputs.sdks).consumers }}
+        # target:
+        #   - "sujanp-kr/consumer-A"
+        #   - "sujanp-kr/consumer-B"
+    steps:
+     
+      - name: Set Global Data
+        id: global_data
+        run: |
+          echo "::set-output name=date::$(date +'%Y-%m-%d')"
+          echo "::set-output name=defaultBranch::$(yarn run --silent cli get-repo-default-branch --sdk ${{ matrix.target }} --accessToken ${{ secrets.ACCESS_TOKEN }})"
+
+      - name: Checkout ${{ matrix.target}} (Nested)
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository: ${{ matrix.target }}
+          path: ${{ matrix.target }}
+
+      - name: Update SDK version
+        run: |
+          cd ${{ matrix.target }}
+          yarn add ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
+          cat package.jsono
+
+      - name: Create Pull Request in ${{ matrix.target }}
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: ${{ matrix.sdk.repo }}
+          commit-message: "[Auto] Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
+          committer: Katomatic <noreply@kroger.com>
+          author: automation <automation@user.noreply.kroger.com>
+          signoff: false
+          base: main
+          # base: ${{ steps.global_data.outputs.defaultBranch }}
+          branch: automation/version-bump-${{github.event.inputs.sdk}}-${{steps.global_data.outputs.date}}
+          delete-branch: true
+          title: "[KAT][Automation] Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
+          body: |
+            Bump sdk version
+            - Updated ${{ steps.global_data.outputs.date }}
+            - Auto-generated by Katomatic
+          labels: version-patch
+          assignees: sujanp-kr
+          team-reviewers: |
+            owners
+            maintainers
+          draft: false

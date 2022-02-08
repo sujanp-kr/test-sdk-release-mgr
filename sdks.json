@@ -6,8 +6,7 @@
     "weeklyUpdates": {
       "outputDest": "behavioral-analytics-banner/src",
       "schemaRoot": "banner"
-    },
-    "consumers": []
+    }
   },
   "demeter": {
     "sshURL": "git@github.com:krogertechnology/behavioral-analytics-demeter.git",
@@ -16,8 +15,7 @@
     "weeklyUpdates": {
       "outputDest": "behavioral-analytics-demeter/src",
       "schemaRoot": "demeter"
-    },
-    "consumers": []
+    }
   },
   "devmarketplace": {
     "sshURL": "git@github.com:krogertechnology/behavioral-analytics-devmarketplace.git",
@@ -26,8 +24,7 @@
     "weeklyUpdates": {
       "outputDest": "behavioral-analytics-devmarketplace/src",
       "schemaRoot": "devmarketplace"
-    },
-    "consumers": []
+    }
   },
   "esperanto": {
     "sshURL": "git@github.com:krogertechnology/esperanto.git",
@@ -36,39 +33,6 @@
     "weeklyUpdates": {
       "outputDest": "esperanto/@kroger/clickstream/analytics-utils/types",
       "schemaRoot": "banner"
-    },
-    "consumers": []
-  },
-  "usageMetrics": {
-    "sshURL": "git@gitlab.kroger.com:kat/web/analytics-sdk.git",
-    "htmlURL": "https://gitlab.kroger.com/kat/web/analytics-sdk/",
-    "repo": "Not github repo",
-    "weeklyUpdates": {},
-    "consumers": ["analytics-core", "esperanto"]
-  },
-  "analytics-core": {
-    "sshURL": "git@github.com:krogertechnology/behavioral-analytics-core.git",
-    "htmlURL": "https://github.com/krogertechnology/behavioral-analytics-core",
-    "repo": "behavioral-analytics-core",
-    "weeklyUpdates": {},
-    "consumers": {
-      "include": [
-        {"orgRepo": "krogertechnology/behavioral-analytics-banner"},
-        {"orgRepo": "krogertechnology/behavioral-analytics-demeter"},
-        {"orgRepo": "krogertechnology/behavioral-analytics-devmarketplace"}
-      ]
-    }
-  },
-  "lodash": {
-    "sshURL": "",
-    "htmlURL": "",
-    "repo": "Not KAT repo; Only for testing",
-    "weeklyUpdates": {},
-    "consumers": {
-          "include": [
-            {"orgRepo": "sujanp-kr/consumer-A"},
-            {"orgRepo": "sujanp-kr/consumer-B"}
-          ]
     }
   }
 }

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getSdkMatrix should returns sdk names 1`] = `
+Array [
+  Object {
+    "htmlURL": "htmlURL",
+    "name": "banner",
+    "repo": "brepo",
+    "sshURL": "sshURL",
+    "weeklyUpdates": Object {
+      "outputDest": "behavioral-analytics-banner/src",
+      "schemaRoot": "banner",
+    },
+  },
+  Object {
+    "htmlURL": "htmlURL",
+    "name": "demeter",
+    "repo": "brepo",
+    "sshURL": "sshURL",
+    "weeklyUpdates": Object {
+      "outputDest": "behavioral-analytics-demeter/src",
+      "schemaRoot": "demeter",
+    },
+  },
+  Object {
+    "htmlURL": "htmlURL",
+    "name": "devmarketplace",
+    "repo": "brepo",
+    "sshURL": "sshURL",
+    "weeklyUpdates": Object {
+      "outputDest": "behavioral-analytics-devmarketplace/src",
+      "schemaRoot": "devmarketplace",
+    },
+  },
+]
+`;

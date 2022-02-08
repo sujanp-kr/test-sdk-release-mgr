@@ -1,0 +1,33 @@
+name: Test & Lint
+
+# run on all pull requests and after being pushed to master
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  code-checks:
+    runs-on: [self-hosted, linux, kubernetes, on-prem]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.17.6
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: |
+          yarn
+          git diff --exit-code yarn.lock || echo Please update yarn.lock
+
+      - name: Compile
+        run: yarn tsc
+
+      - name: Run Lint
+        run: yarn lint
+
+      - name: Run Tests
+        run: yarn test

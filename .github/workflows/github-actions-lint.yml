@@ -1,0 +1,25 @@
+name: Github actions lint
+
+# run on all pull requests & merges to main that edit YML
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.yml'
+  pull_request:
+    paths:
+      - '**.yml'
+
+jobs:
+  yaml-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+      - name: Check workflow files
+        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        shell: bash
