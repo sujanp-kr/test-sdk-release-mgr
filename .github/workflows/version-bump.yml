@@ -90,7 +90,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          path: ${{ matrix.sdk.repo }}
+          path: ${{ matrix.target }}
           commit-message: "[Auto] Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
           committer: Katomatic <noreply@kroger.com>
           author: automation <automation@user.noreply.kroger.com>

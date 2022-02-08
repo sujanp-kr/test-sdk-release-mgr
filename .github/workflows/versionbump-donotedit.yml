@@ -1,131 +1,139 @@
 name: Version Bump DONOTEDIT
-
 on:
-  #Could automate this further by a making it a workflow_call, summoned from any SDK once it has a new tag; or another cron job on a schedule.
-  workflow_dispatch:
-    inputs:
-      sdk:
-        type: choice
-        options: #No support yet to have dynamic inputs, say types from a json file.
-          - sdk1
-          - sdk2
-          - lodash
-        description: "Library to bump"
-        required: true
-        default: "lodash"
-      version: #Do we not bump to the latest always? If so, we wont really need this.
-        description: "Release Version" 
-        required: true
-        default: "4.17.21"
-        
-        
-env:
-  sdk1: consumer-A
-  sdk2: consumer-B
-  lodash: "[consumer-A, consumer-B]"
-
-# Avoiding this for now since no multi-select in github workflow yet; 
-# Also to reduce complexity to change consumer list based on sdk choice above
-#       consumer:
-#         type: choice 
-#         options: 
-#           - Consumer-A
-#           - All 
-#         description: "Environment to Deploy to"
-#         required: true
-
+  push:
 
 jobs:
-
-  get_consumers_for_sdk:
+  blah1:
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v2
-      
-      - id: notiz_consumers
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-            path: 'consumers-donotedit.json'
-            prop_path: '${{ github.event.inputs.sdk }}'
-      - run: |
-          export notz="${{steps.notiz_consumers.outputs.prop}}"
-          echo "notiz export: ${notz}"
-          echo "::set-output name=nConsumers::${notz}"
+      - run: echo :)
+
+# on:
+#   #Could automate this further by a making it a workflow_call, summoned from any SDK once it has a new tag; or another cron job on a schedule.
+#   workflow_dispatch:
+#     inputs:
+#       sdk:
+#         type: choice
+#         options: #No support yet to have dynamic inputs, say types from a json file.
+#           - sdk1
+#           - sdk2
+#           - lodash
+#         description: "Library to bump"
+#         required: true
+#         default: "lodash"
+#       version: #Do we not bump to the latest always? If so, we wont really need this.
+#         description: "Release Version" 
+#         required: true
+#         default: "4.17.21"
+        
+        
+# env:
+#   sdk1: consumer-A
+#   sdk2: consumer-B
+#   lodash: "[consumer-A, consumer-B]"
+
+# # Avoiding this for now since no multi-select in github workflow yet; 
+# # Also to reduce complexity to change consumer list based on sdk choice above
+# #       consumer:
+# #         type: choice 
+# #         options: 
+# #           - Consumer-A
+# #           - All 
+# #         description: "Environment to Deploy to"
+# #         required: true
+
+
+# jobs:
+
+#   get_consumers_for_sdk:
+#     runs-on: ubuntu-latest
     
-      - id: jq_consumers
-        run: |
-          export jqcs=$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers-donotedit.json))
-          echo "jq export: ${jqcs}"
-          echo "::set-output name=jConsumers::${jqcs}"
+#     steps:
+#       - uses: actions/checkout@v2
+      
+#       - id: notiz_consumers
+#         uses: notiz-dev/github-action-json-property@release
+#         with: 
+#             path: 'consumers-donotedit.json'
+#             prop_path: '${{ github.event.inputs.sdk }}'
+#       - run: |
+#           export notz="${{steps.notiz_consumers.outputs.prop}}"
+#           echo "notiz export: ${notz}"
+#           echo "::set-output name=nConsumers::${notz}"
+    
+#       - id: jq_consumers
+#         run: |
+#           export jqcs=$(jq '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers-donotedit.json))
+#           echo "jq export: ${jqcs}"
+#           echo "::set-output name=jConsumers::${jqcs}"
           
-      - id: env_consumers
-        run: echo "${{ env.${{github.events.input.sdk}}}}"
+#       - id: env_consumers
+#         run: echo "${{ env.${{github.events.input.sdk}}}}"
 
  
-    outputs:
-      notizConsumers: ${{ steps.notiz_consumers.outputs.nComsumers }}
-      jqConsumers: ${{ steps.jq_consumers.outputs.jConsumers }}
+#     outputs:
+#       notizConsumers: ${{ steps.notiz_consumers.outputs.nComsumers }}
+#       jqConsumers: ${{ steps.jq_consumers.outputs.jConsumers }}
 
 
-  bump-consumer:
-    runs-on: ubuntu-latest
-    needs: get_consumers_for_sdk
-    strategy:
-      fail-fast: false
-      matrix: 
-        target: ${{ env.${{github.events.input.sdk}}}}
-#         [consumer-A, consumer-B]
+#   bump-consumer:
+#     runs-on: ubuntu-latest
+#     needs: get_consumers_for_sdk
+#     strategy:
+#       fail-fast: false
+#       matrix: 
+#         target: ${{ env.${{github.events.input.sdk}}}}
+# #         [consumer-A, consumer-B]
         
-    steps:
+#     steps:
 
-      - name: Check inputs
-        run: |
-          echo $
-          echo ${{ github.event.inputs.sdk }}
-          echo ${{ github.event.inputs.version }}
-          echo "Got jq matrix: ${{needs.get_consumers_for_sdk.outputs.jqConsumers}}"        
-          echo "Working with ${{ matrix.target }}"
+#       - name: Check inputs
+#         run: |
+#           echo $
+#           echo ${{ github.event.inputs.sdk }}
+#           echo ${{ github.event.inputs.version }}
+#           echo "Got jq matrix: ${{needs.get_consumers_for_sdk.outputs.jqConsumers}}"        
+#           echo "Working with ${{ matrix.target }}"
 
-      - name: Set Global Data
-        id: global_data
-        run: |
-          echo "::set-output name=date::$(date +'%Y-%m-%d')"
+#       - name: Set Global Data
+#         id: global_data
+#         run: |
+#           echo "::set-output name=date::$(date +'%Y-%m-%d')"
       
-      - name: Checkout ${{ matrix.target }}
-        uses: actions/checkout@v2
-        with:
-          token: ${{secrets.TOKEN}}
-          repository: sujanp-kr/${{ matrix.target }}
-          path: ${{ matrix.target }}
+#       - name: Checkout ${{ matrix.target }}
+#         uses: actions/checkout@v2
+#         with:
+#           token: ${{secrets.TOKEN}}
+#           repository: sujanp-kr/${{ matrix.target }}
+#           path: ${{ matrix.target }}
           
-      - name: Update SDK version
-        run: |
-          cd ${{ matrix.target }}
-          yarn add -D ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
-          cat package.json
+#       - name: Update SDK version
+#         run: |
+#           cd ${{ matrix.target }}
+#           yarn add -D ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
+#           cat package.json
       
-      - name: Create Pull Request in ${{ matrix.target }}
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.TOKEN }}
-          path: ${{ matrix.target }}
-          commit-message: "Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
-          committer: katomation <noreply@kroger.com>
-          author: katomation <automation@user.noreply.kroger.com>
-          signoff: false
-          base: main
-          branch: automation/version-bump-${{github.event.inputs.sdk}}-${{steps.global_data.outputs.date}}
-          delete-branch: true
-          title: "[Automation] Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
-          body: |
-            Bump sdk version
-            - Updated ${{steps.global_data.outputs.date}}
-            - Auto-generated by Katomatic
-          labels: version-patch
-          assignees: sujanp-kr
-          team-reviewers: |
-            owners
-            maintainers
-          draft: false
+#       - name: Create Pull Request in ${{ matrix.target }}
+#         uses: peter-evans/create-pull-request@v3
+#         with:
+#           token: ${{ secrets.TOKEN }}
+#           path: ${{ matrix.target }}
+#           commit-message: "Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
+#           committer: katomation <noreply@kroger.com>
+#           author: katomation <automation@user.noreply.kroger.com>
+#           signoff: false
+#           base: main
+#           branch: automation/version-bump-${{github.event.inputs.sdk}}-${{steps.global_data.outputs.date}}
+#           delete-branch: true
+#           title: "[Automation] Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
+#           body: |
+#             Bump sdk version
+#             - Updated ${{steps.global_data.outputs.date}}
+#             - Auto-generated by Katomatic
+#           labels: version-patch
+#           assignees: sujanp-kr
+#           team-reviewers: |
+#             owners
+#             maintainers
+#           draft: false
           

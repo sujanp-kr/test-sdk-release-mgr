@@ -55,7 +55,7 @@ jobs:
           echo "Input SDK: ${{ github.event.inputs.sdk }}"
           echo "Bump version: ${{ github.event.inputs.version }}"
           echo "Got json: ${{ needs.get_consumers_for_sdk.outputs.consumers }}"
-          echo "Matrix: ${{ matrix }}"
+          echo "Matrix: ${{ matrix.orgRepo }}"
           
       - name: Set Global Data
         id: global_data

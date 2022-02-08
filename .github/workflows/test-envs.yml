@@ -1,75 +1,83 @@
 name: Test ENV. vars
 
 on:
-#   push:
-#     paths:
-#       - '.github/workflows/test.envs.yml'
-      
-  workflow_dispatch:
-    inputs:
-      sdk:
-        type: choice
-        options: #No support yet to have dynamic inputs, say types from a json file.
-          - sdk1
-          - sdk2
-          - lodash
-        description: "Library to bump"
-        required: true
-        default: "lodash"
-      version: #Do we not bump to the latest always? If so, we wont really need this.
-        description: "Release Version" 
-        required: true
-        default: "4.17.21"
+  push:
 
-env:
-  sdk1: sdk1
-  sdk2: sdk2
-  lodash: lodash  
-  inputSdk: ${{ github.event.inputs.sdk }}
-#   outputts:  #Nesting not allowed.
-#       sdk1: consumer-A
-#       sdk2: consumer-B
-#       lodash: '[consumer-A,consumer-B]'
-#'{\"include\":[{\"project\":\"consumer-A\"},{\"project\":\"consumer-B\"}]}'
-  
 jobs:
-  
-  map-env:
+  blah1:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.consumers }}
     steps:
-      - name: check input to env
-        run: |
-          echo ${{ github.event.inputs.sdk }}
-          echo ${{ env.lodash }}
-          echo "INPUTT=${{ env.lodash }}" >> $GITHUB_ENV
-          echo $INPUTT
-          
-      - name: IF Input, then output
-        run: |
-          if [ ${{env.inputSdk}} == ${{env.sdk1}} ]
-          then
-            echo "outputting ${{env.sdk1}}"
-            echo "::set-output name=consumers::${{env.outputs.sdk1}}"
-          elif [ ${{env.inputSdk}} == ${{env.sdk2}} ]
-          then
-            echo "outputting ${{env.sdk2}}"
-            echo "::set-output name=consumers::${{env.outputs.sdk2}}"
-          elif [ ${{env.inputSdk}} == ${{env.lodash}} ]
-          then
-            echo "outputting ${{env.lodashOutput}}"
-            echo "::set-output name=consumers::${{env.outputs.lodash}}"
-          fi
-          
-  bump-version:
-      needs: map-env
-      runs-on: ubuntu-latest
-      strategy:
-        matrix: ${{needs.map-env.outputs.matrix)}}
-            
-      steps:
-        - run: echo "Using ${{matrix}}"
+      - run: echo :)
+# on:
+# #   push:
+# #     paths:
+# #       - '.github/workflows/test.envs.yml'
+      
+#   workflow_dispatch:
+#     inputs:
+#       sdk:
+#         type: choice
+#         options: #No support yet to have dynamic inputs, say types from a json file.
+#           - sdk1
+#           - sdk2
+#           - lodash
+#         description: "Library to bump"
+#         required: true
+#         default: "lodash"
+#       version: #Do we not bump to the latest always? If so, we wont really need this.
+#         description: "Release Version" 
+#         required: true
+#         default: "4.17.21"
 
-# echo ${{ env.$INPUTT }} #not valid.
+# env:
+#   sdk1: sdk1
+#   sdk2: sdk2
+#   lodash: lodash  
+#   inputSdk: ${{ github.event.inputs.sdk }}
+# #   outputts:  #Nesting not allowed.
+# #       sdk1: consumer-A
+# #       sdk2: consumer-B
+# #       lodash: '[consumer-A,consumer-B]'
+# #'{\"include\":[{\"project\":\"consumer-A\"},{\"project\":\"consumer-B\"}]}'
+  
+# jobs:
+  
+#   map-env:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       matrix: ${{ steps.set-matrix.outputs.consumers }}
+#     steps:
+#       - name: check input to env
+#         run: |
+#           echo ${{ github.event.inputs.sdk }}
+#           echo ${{ env.lodash }}
+#           echo "INPUTT=${{ env.lodash }}" >> $GITHUB_ENV
+#           echo $INPUTT
+          
+#       - name: IF Input, then output
+#         run: |
+#           if [ ${{env.inputSdk}} == ${{env.sdk1}} ]
+#           then
+#             echo "outputting ${{env.sdk1}}"
+#             echo "::set-output name=consumers::${{env.outputs.sdk1}}"
+#           elif [ ${{env.inputSdk}} == ${{env.sdk2}} ]
+#           then
+#             echo "outputting ${{env.sdk2}}"
+#             echo "::set-output name=consumers::${{env.outputs.sdk2}}"
+#           elif [ ${{env.inputSdk}} == ${{env.lodash}} ]
+#           then
+#             echo "outputting ${{env.lodashOutput}}"
+#             echo "::set-output name=consumers::${{env.outputs.lodash}}"
+#           fi
+          
+#   bump-version:
+#       needs: map-env
+#       runs-on: ubuntu-latest
+#       strategy:
+#         matrix: ${{needs.map-env.outputs.matrix)}}
+            
+#       steps:
+#         - run: echo "Using ${{matrix}}"
+
+# # echo ${{ env.$INPUTT }} #not valid.
 
