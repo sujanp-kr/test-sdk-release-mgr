@@ -34,18 +34,7 @@ jobs:
     outputs:
       consumers: ${{ steps.jq_consumers.outputs.consumers }}
 
-  check-inputs:
-    runs-on: ubuntu-latest
-    needs: get_consumers_for_sdk
-    steps:
-      - name: Check inputs
-        run: |
-          echo "From env.: ${{ env.CONSUMERS }}"
-          echo ${{ github.event.inputs.sdk }}
-          echo ${{ github.event.inputs.version }}
-          echo "Got json: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
-          echo "${{fromJSON(needs.get_consumers_for_sdk.outputs.consumers).consumers}}"
-#         echo "Working with ${{ matrix.target }}"
+
 
   bump-consumer:
     runs-on: ubuntu-latest
@@ -60,12 +49,21 @@ jobs:
 #           - consumer-B
         
     steps:
+
+      - name: Check inputs
+        run: |
+          echo "From env.: ${{ env.CONSUMERS }}"
+          echo ${{ github.event.inputs.sdk }}
+          echo ${{ github.event.inputs.version }}
+          echo "Got json: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
+          echo "${{fromJSON(needs.get_consumers_for_sdk.outputs.consumers).includes}}"
+          echo "Working with ${{ matrix }}"
+          echo "I can see: ${{ matrix.orgRepo }}"
           
       - name: Set Global Data
         id: global_data
         run: |
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
-          #echo "::set-output name=repo::$(yarn run --silent cli print-sdk-repo --sdk ${{ matrix.target }})"
       
       - name: Checkout ${{ matrix.orgRepo }}
         uses: actions/checkout@v2
