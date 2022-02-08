@@ -65,9 +65,9 @@
     "repo": "Not KAT repo; Only for testing",
     "weeklyUpdates": {},
     "consumer": {
-          "consumers": [
-            {"consumer": "sujanp-kr/consumer-A"},
-            {"consumer": "sujanp-kr/consumer-B"}
+          "includes": [
+            {"orgRepo": "sujanp-kr/consumer-A"},
+            {"orgRepo": "sujanp-kr/consumer-B"}
           ]
     }
   }
