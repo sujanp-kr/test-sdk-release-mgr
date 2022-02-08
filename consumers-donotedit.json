@@ -1,9 +1,9 @@
 {
-  "usageMetrics": [
+  "kroger-usage-metrics": [
     "krogertechnology/behavioral-analytics-core",
     "sujanp-kr/consumer-A"
   ],
-  "analyticsCore": [
+  "behavioral-analytics-core": [
     "krogertechnology/behavioral-analytics-banner",
     "krogertechnology/behavioral-analytics-demeter",
     "krogertechnology/behavioral-analytics-devmarketplace"

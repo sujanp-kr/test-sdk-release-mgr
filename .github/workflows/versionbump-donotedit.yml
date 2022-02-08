@@ -7,13 +7,13 @@ on:
       sdk:
         type: choice
         options: #No support yet to have dynamic inputs, say types from a json file.
-          - usageMetrics
+          - kroger-usage-metrics
           - sdk1
           - sdk2
           - lodash
         description: "Library to bump"
         required: true
-        default: "usageMetrics"
+        default: "kroger-usage-metrics"
       version: #Do we not bump to the latest always? If so, we wont really need this.
         description: "Release Version" 
         required: true
@@ -55,7 +55,7 @@ jobs:
           echo "::set-output name=nConsumers::${notz}"
     
       - id: jq_consumers
-        run: echo "::set-output name=jConsumers::$(jq -c '.${{github.event.inputs.sdk}}' <<< $(cat ./consumers-donotedit.json))"
+        run: echo "::set-output name=jConsumers::$(jq -c '.\"${{github.event.inputs.sdk}}\"' <<< $(cat ./consumers-donotedit.json))"
           
  
     outputs:
