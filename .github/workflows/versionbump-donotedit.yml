@@ -55,7 +55,7 @@ jobs:
           echo "::set-output name=nConsumers::${notz}"
     
       - id: jq_consumers
-        run: echo "::set-output name=jConsumers::$(jq -c '.\"${{github.event.inputs.sdk}}\"' <<< $(cat ./consumers-donotedit.json))"
+        run: echo "::set-output name=jConsumers::$(jq -c '."${{github.event.inputs.sdk}}"' <<< $(cat ./consumers-donotedit.json))"
           
  
     outputs:
