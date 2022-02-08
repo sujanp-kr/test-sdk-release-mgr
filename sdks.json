@@ -65,10 +65,10 @@
     "repo": "Not KAT repo; Only for testing",
     "weeklyUpdates": {},
     "consumer": {
-          "consumers": {
-            "consumer-A": "sujanp-kr/consumer-A",
-            "consumer-B": "sujanp-kr/consumer-B"
-          }
+          "consumers": [
+            {"consumer": "sujanp-kr/consumer-A"},
+            {"consumer": "sujanp-kr/consumer-B"}
+          ]
     }
   }
 }
