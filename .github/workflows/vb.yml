@@ -28,8 +28,8 @@ jobs:
     
       - id: jq_consumers
         run: |
-          echo $(jq -c '.lodash.consumer' <<< $(cat ./sdks.json))
-          echo "::set-output name=consumers::$(jq -c '.lodash.consumer' <<< $(cat ./sdks.json))"
+          echo $(jq -c '.${{ github.event.inputs.sdk }}.consumer' <<< $(cat ./sdks.json))
+          echo "::set-output name=consumers::$(jq -c '.${{ github.event.inputs.sdk }}.consumer' <<< $(cat ./sdks.json))"
  
     outputs:
       consumers: ${{ steps.jq_consumers.outputs.consumers }}
