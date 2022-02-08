@@ -41,7 +41,8 @@ jobs:
     needs: get_consumers_for_sdk
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
+      matrix: 
+        orgRepo: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #       target: [consumer-A, consumer-B]
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #         target:
@@ -54,22 +55,19 @@ jobs:
         run: |
           echo ${{ github.event.inputs.sdk }}
           echo ${{ github.event.inputs.version }}
-          echo "Got json: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
-          echo "from json: ${{fromJSON(needs.get_consumers_for_sdk.outputs.consumers)}}"          
-          echo "from json .includes: ${{fromJSON(needs.get_consumers_for_sdk.outputs.consumers).includes}}"
-          echo "expr matrix: ${{ matrix }}"
+          echo "matrix.orgRepo: ${{ matrix }}"
           
       - name: Set Global Data
         id: global_data
         run: |
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
       
-      - name: Checkout ${{ matrix }}
+      - name: Checkout ${{ matrix.orgRepo }}
         uses: actions/checkout@v2
         with:
           token: ${{secrets.TOKEN}}
-          repository: sujanp-kr/${{ matrix }}
-          path: ${{ matrix }}
+          repository: sujanp-kr/${{ matrix.orgRepo  }}
+          path: ${{ matrix.orgRepo  }}
           
       - name: Update SDK version
         run: |
