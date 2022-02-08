@@ -1,74 +1,20 @@
 {
-  "banner": {
-    "sshURL": "git@github.com:krogertechnology/behavioral-analytics-banner.git",
-    "htmlURL": "https://github.com/krogertechnology/behavioral-analytics-banner",
-    "repo": "behavioral-analytics-banner",
-    "weeklyUpdates": {
-      "outputDest": "behavioral-analytics-banner/src",
-      "schemaRoot": "banner"
-    },
-    "consumers": []
-  },
-  "demeter": {
-    "sshURL": "git@github.com:krogertechnology/behavioral-analytics-demeter.git",
-    "htmlURL": "https://github.com/krogertechnology/behavioral-analytics-demeter",
-    "repo": "behavioral-analytics-demeter",
-    "weeklyUpdates": {
-      "outputDest": "behavioral-analytics-demeter/src",
-      "schemaRoot": "demeter"
-    },
-    "consumers": []
-  },
-  "devmarketplace": {
-    "sshURL": "git@github.com:krogertechnology/behavioral-analytics-devmarketplace.git",
-    "htmlURL": "https://github.com/krogertechnology/behavioral-analytics-devmarketplace",
-    "repo": "behavioral-analytics-devmarketplace",
-    "weeklyUpdates": {
-      "outputDest": "behavioral-analytics-devmarketplace/src",
-      "schemaRoot": "devmarketplace"
-    },
-    "consumers": []
-  },
-  "esperanto": {
-    "sshURL": "git@github.com:krogertechnology/esperanto.git",
-    "htmlURL": "https://github.com/krogertechnology/esperanto",
-    "repo": "esperanto",
-    "weeklyUpdates": {
-      "outputDest": "esperanto/@kroger/clickstream/analytics-utils/types",
-      "schemaRoot": "banner"
-    },
-    "consumers": []
-  },
-  "usageMetrics": {
-    "sshURL": "git@gitlab.kroger.com:kat/web/analytics-sdk.git",
-    "htmlURL": "https://gitlab.kroger.com/kat/web/analytics-sdk/",
-    "repo": "Not github repo",
-    "weeklyUpdates": {},
-    "consumers": ["analytics-core", "esperanto"]
-  },
-  "analytics-core": {
-    "sshURL": "git@github.com:krogertechnology/behavioral-analytics-core.git",
-    "htmlURL": "https://github.com/krogertechnology/behavioral-analytics-core",
-    "repo": "behavioral-analytics-core",
-    "weeklyUpdates": {},
-    "consumers": {
-      "include": [
-        {"orgRepo": "krogertechnology/behavioral-analytics-banner"},
-        {"orgRepo": "krogertechnology/behavioral-analytics-demeter"},
-        {"orgRepo": "krogertechnology/behavioral-analytics-devmarketplace"}
+  "sdk1": {
+    "consumers": [
+         {"consumer": "consumer-A"}
       ]
-    }
+  },
+  "sdk2": {
+    "consumers": [
+         {"consumer": "consumer-B"}
+      ]
   },
   "lodash": {
-    "sshURL": "",
-    "htmlURL": "",
-    "repo": "Not KAT repo; Only for testing",
-    "weeklyUpdates": {},
-    "consumers": {
-          "include": [
-            {"orgRepo": "sujanp-kr/consumer-A"},
-            {"orgRepo": "sujanp-kr/consumer-B"}
-          ]
+    "consumer": {
+      "consumers": {
+        "consumer-A": "sujanp-kr/consumer-A",
+        "consumer-B": "sujanp-kr/consumer-B"
+      }
     }
   }
 }
