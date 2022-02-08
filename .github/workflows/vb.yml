@@ -57,20 +57,20 @@ jobs:
           echo ${{ github.event.inputs.version }}
           echo "Got json: ${{needs.get_consumers_for_sdk.outputs.consumers}}"
           echo "${{fromJSON(needs.get_consumers_for_sdk.outputs.consumers).includes}}"
-          echo "Working with ${{ matrix }}"
-          echo "I can see: ${{ matrix.orgRepo }}"
+          echo  ${{ matrix }}
+          echo "I can see: ${{ matrix }}"
           
       - name: Set Global Data
         id: global_data
         run: |
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
       
-      - name: Checkout ${{ matrix.orgRepo }}
+      - name: Checkout ${{ matrix }}
         uses: actions/checkout@v2
         with:
           token: ${{secrets.TOKEN}}
-          repository: sujanp-kr/${{ matrix.orgRepo }}
-          path: ${{ matrix.orgRepo }}
+          repository: sujanp-kr/${{ matrix }}
+          path: ${{ matrix }}
           
       - name: Update SDK version
         run: |
