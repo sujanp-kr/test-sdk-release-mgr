@@ -71,7 +71,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{secrets.TOKEN}}
-          repository: sujanp-kr/${{ matrix.consumer }}
+          repository: ${{ matrix.consumer }}
           path: ${{ matrix.consumer }}
           
       - name: Update SDK version
