@@ -64,11 +64,9 @@
     "htmlURL": "",
     "repo": "Not KAT repo; Only for testing",
     "weeklyUpdates": {},
-    "consumer": {
-          "consumers": [
-            {"orgRepo": "consumer-A"},
-            {"orgRepo": "consumer-B"}
-          ]
+    "consumers": {
+      "consumer-A": {},
+      "consumer-B": {}
     }
   }
 }

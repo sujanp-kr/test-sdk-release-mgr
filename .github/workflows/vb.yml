@@ -28,8 +28,8 @@ jobs:
     
       - id: jq_consumers
         run: |
-          echo $(jq -c '.${{ github.event.inputs.sdk }}.consumer' <<< $(cat ./sdks.json))
-          echo "::set-output name=consumers::$(jq -c '.${{ github.event.inputs.sdk }}.consumer' <<< $(cat ./sdks.json))"
+          echo $(jq -c '.${{ github.event.inputs.sdk }}.consumers' <<< $(cat ./sdks.json))
+          echo "::set-output name=consumers::$(jq -c '.${{ github.event.inputs.sdk }}.consumers' <<< $(cat ./sdks.json))"
  
     outputs:
       consumers: ${{ steps.jq_consumers.outputs.consumers }}
@@ -55,31 +55,31 @@ jobs:
           echo "Input SDK: ${{ github.event.inputs.sdk }}"
           echo "Bump version: ${{ github.event.inputs.version }}"
           echo "Got json: ${{ needs.get_consumers_for_sdk.outputs.consumers }}"
-          echo "Matrix: ${{ matrix.includes[0].orgRepo }}"
+          echo "Matrix: ${{ matrix}}"
           
       - name: Set Global Data
         id: global_data
         run: |
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
       
-      - name: Checkout ${{ matrix.orgRepo }}
+      - name: Checkout ${{ matrix }}
         uses: actions/checkout@v2
         with:
           token: ${{secrets.TOKEN}}
-          repository: sujanp-kr/${{ matrix.orgRepo  }}
-          path: ${{ matrix.orgRepo  }}
+          repository: sujanp-kr/${{ matrix }}
+          path: ${{ matrix }}
           
       - name: Update SDK version
         run: |
-          cd ${{ matrix.orgRepo }}
+          cd ${{ matrix }}
           yarn add -D ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
           cat package.json
       
-      - name: Create Pull Request in ${{ matrix.orgRepo }}
+      - name: Create Pull Request in ${{ matrix }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.TOKEN }}
-          path: ${{ matrix.orgRepo }}
+          path: ${{ matrix }}
           commit-message: "Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
           committer: katomation <noreply@kroger.com>
           author: katomation <automation@user.noreply.kroger.com>
