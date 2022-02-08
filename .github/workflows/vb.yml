@@ -1,4 +1,4 @@
-name: Version Bump DONOTEDIT
+name: Version Bump Tester
 
 on:
   #Could automate this further by a making it a workflow_call, summoned from any SDK once it has a new tag; or another cron job on a schedule.

@@ -1,5 +1,17 @@
 {
-  "sdk1": "consumer-A",
-  "sdk2": "consumer-B",
-  "lodash": [ "consumer-A", "consumer-B" ] 
+  "kroger-usage-metrics": [
+    "krogertechnology/behavioral-analytics-core", 
+    "krogertechnology/esperanto"
+  ],
+  "analytics-core": [
+    "krogertechnology/behavioral-analytics-banner",
+    "krogertechnology/behavioral-analytics-demeter",
+    "krogertechnology/behavioral-analytics-devmarketplace"
+  ],
+  "sdk1": ["sujanp-kr/consumer-A"],
+  "sdk2": ["sujanp-kr/consumer-B"],
+  "lodash": [ 
+    "sujanp-kr/consumer-A", 
+    "sujanp-kr/consumer-B" 
+  ] 
 }
