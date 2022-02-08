@@ -1,7 +1,6 @@
 {
   "kroger-usage-metrics": [
-    "krogertechnology/behavioral-analytics-core", 
-    "krogertechnology/esperanto"
+    "krogertechnology/behavioral-analytics-core"
   ],
   "analytics-core": [
     "krogertechnology/behavioral-analytics-banner",
