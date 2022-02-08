@@ -66,8 +66,8 @@
     "weeklyUpdates": {},
     "consumer": {
           "includes": [
-            {"orgRepo": "sujanp-kr/consumer-A"},
-            {"orgRepo": "sujanp-kr/consumer-B"}
+            {"orgRepo": "consumer-A"},
+            {"orgRepo": "consumer-B"}
           ]
     }
   }
