@@ -52,7 +52,7 @@
     "repo": "behavioral-analytics-core",
     "weeklyUpdates": {},
     "consumer": {
-      "include": [
+      "consumers": [
         {"orgRepo": "krogertechnology/behavioral-analytics-banner"},
         {"orgRepo": "krogertechnology/behavioral-analytics-demeter"},
         {"orgRepo": "krogertechnology/behavioral-analytics-devmarketplace"}
@@ -65,7 +65,7 @@
     "repo": "Not KAT repo; Only for testing",
     "weeklyUpdates": {},
     "consumer": {
-          "includes": [
+          "consumers": [
             {"orgRepo": "consumer-A"},
             {"orgRepo": "consumer-B"}
           ]
