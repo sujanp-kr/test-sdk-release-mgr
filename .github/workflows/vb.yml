@@ -1,4 +1,4 @@
-name: Version Bump Tester
+name: Version Bump DONOTEDIT
 
 on:
   #Could automate this further by a making it a workflow_call, summoned from any SDK once it has a new tag; or another cron job on a schedule.
@@ -17,6 +17,23 @@ on:
         description: "Release Version" 
         required: true
         default: "4.17.21"
+        
+        
+# env:
+#   sdk1: consumer-A
+#   sdk2: consumer-B
+#   lodash: "[consumer-A, consumer-B]"
+
+# Avoiding this for now since no multi-select in github workflow yet; 
+# Also to reduce complexity to change consumer list based on sdk choice above
+#       consumer:
+#         type: choice 
+#         options: 
+#           - Consumer-A
+#           - All 
+#         description: "Environment to Deploy to"
+#         required: true
+
 
 jobs:
 
@@ -25,15 +42,24 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+      
+      - id: notiz_consumers
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+            path: 'consumers-donotedit.json'
+            prop_path: '${{ github.event.inputs.sdk }}'
+      - run: |
+          export notz="${{steps.notiz_consumers.outputs.prop}}"
+          echo "notiz export: ${notz}"
+          echo "::set-output name=nConsumers::${notz}"
     
       - id: jq_consumers
-        run: |
-          echo $(jq -c '.${{ github.event.inputs.sdk }}.consumers' <<< $(cat ./sdks.json))
-          echo "::set-output name=consumers::$(jq -c '.${{ github.event.inputs.sdk }}.consumers' <<< $(cat ./sdks.json))"
+        run: echo "::set-output name=jConsumers::$(jq -c '.${{github.event.inputs.sdk}}.consumers' <<< $(cat ./sdks.json))"
+          
  
     outputs:
-      consumers: ${{ steps.jq_consumers.outputs.consumers }}
-
+      notizConsumers: ${{ steps.notiz_consumers.outputs.nComsumers }}
+      jqConsumers: ${{ steps.jq_consumers.outputs.jConsumers }}
 
 
   bump-consumer:
@@ -42,17 +68,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
+        target: ${{ fromJson(needs.get_consumers_for_sdk.outputs.jqConsumers)}}
+#         ${{ env.${{github.events.input.sdk}}}}
+#         [consumer-A, consumer-B]
         
     steps:
 
       - name: Check inputs
         run: |
-          echo "Input SDK: ${{ github.event.inputs.sdk }}"
-          echo "Bump version: ${{ github.event.inputs.version }}"
-          echo "Got json: ${{ needs.get_consumers_for_sdk.outputs.consumers }}"
-          echo "Working with: ${{ matrix.target }}"
-          
+          echo $
+          echo ${{ github.event.inputs.sdk }}
+          echo ${{ github.event.inputs.version }}          
+          echo "Got notiz matrix: ${{needs.get_consumers_for_sdk.outputs.nConsumers}}" 
+          echo "Got jq matrix: ${{needs.get_consumers_for_sdk.outputs.jqConsumers}}"        
+          echo "Working with ${{ matrix.target }}"
       - name: Set Global Data
         id: global_data
         run: |
