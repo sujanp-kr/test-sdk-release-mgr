@@ -1,6 +1,7 @@
 {
   "kroger-usage-metrics": [
-    "krogertechnology/behavioral-analytics-core"
+    "krogertechnology/behavioral-analytics-core",
+    "sujanp-kr/consumer-A"
   ],
   "analytics-core": [
     "krogertechnology/behavioral-analytics-banner",
