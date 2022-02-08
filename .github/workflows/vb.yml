@@ -42,7 +42,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        orgRepo: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
+        includes: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #       target: [consumer-A, consumer-B]
 #       target: ${{fromJson(needs.get_consumers_for_sdk.outputs.consumers)}}
 #         target:
