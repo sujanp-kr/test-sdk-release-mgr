@@ -28,6 +28,7 @@ jobs:
     
       - id: jq_consumers
         run: |
+          echo $(jq '.lodash.consumer' <<< $(cat ./sdks.json) | tr -d '\n')
           echo "::set-output name=consumers::$(jq '.lodash.consumer' <<< $(cat ./sdks.json) | tr -d '\n')"
  
     outputs:
