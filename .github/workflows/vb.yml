@@ -67,24 +67,24 @@ jobs:
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
           #echo "::set-output name=repo::$(yarn run --silent cli print-sdk-repo --sdk ${{ matrix.target }})"
       
-      - name: Checkout ${{ matrix.consumer }}
+      - name: Checkout ${{ matrix.orgRepo }}
         uses: actions/checkout@v2
         with:
           token: ${{secrets.TOKEN}}
-          repository: ${{ matrix.consumer }}
-          path: ${{ matrix.consumer }}
+          repository: ${{ matrix.orgRepo }}
+          path: ${{ matrix.orgRepo }}
           
       - name: Update SDK version
         run: |
-          cd ${{ matrix.target }}
+          cd ${{ matrix.orgRepo }}
           yarn add -D ${{ github.event.inputs.sdk }}@${{ github.event.inputs.version }}
           cat package.json
       
-      - name: Create Pull Request in ${{ matrix.consumer }}
+      - name: Create Pull Request in ${{ matrix.orgRepo }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.TOKEN }}
-          path: ${{ matrix.consumer }}
+          path: ${{ matrix.orgRepo }}
           commit-message: "Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
           committer: katomation <noreply@kroger.com>
           author: katomation <automation@user.noreply.kroger.com>
