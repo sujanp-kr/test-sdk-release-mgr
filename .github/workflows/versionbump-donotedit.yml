@@ -7,13 +7,13 @@ on:
       sdk:
         type: choice
         options: #No support yet to have dynamic inputs, say types from a json file.
-          - kroger-usage-metrics
+          - usageMetrics
           - sdk1
           - sdk2
           - lodash
         description: "Library to bump"
         required: true
-        default: "kroger-usage-metrics"
+        default: "usageMetrics"
       version: #Do we not bump to the latest always? If so, we wont really need this.
         description: "Release Version" 
         required: true
