@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.TOKEN }}
-          repository: git@github.com:sujanp-kr/consumer-A.git
+          repository: sujanp-kr/consumer-A
           path: clonedRepo
 
       - name: Update SDK version
