@@ -22,7 +22,7 @@ jobs:
           repository: sujanp-kr/consumer-A
           path: clonedRepo
 
-      - name: Update SDK version
+      - name: Add test file
         run: |
           pwd
           ls -la
