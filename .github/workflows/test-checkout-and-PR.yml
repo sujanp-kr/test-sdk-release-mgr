@@ -1,16 +1,14 @@
-
 name: Test Checkout and PR
 
 on:
   workflow_dispatch:
   
 jobs:
-
   bump-version:
     runs-on: ubuntu-latest
 
     steps:
-      -uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set Global Data
         id: global_data
