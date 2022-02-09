@@ -7,17 +7,16 @@ on:
       sdk:
         type: choice
         options: #No support yet to have dynamic inputs, say types from a json file.
-          - kroger-usage-metrics
           - sdk1
           - sdk2
           - lodash
         description: "Library to bump"
         required: true
-        default: "kroger-usage-metrics"
+        default: "lodash"
       version: #Do we not bump to the latest always? If so, we wont really need this.
         description: "Release Version" 
         required: true
-        default: "8.5.9"
+        default: "4.17.21"
         
         
 # env:
@@ -104,13 +103,13 @@ jobs:
       - name: Create Pull Request in ${{ matrix.target }}
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN }} #TODO change token per organization dynamically.
           path: ${{ matrix.target }}
           commit-message: "Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
           committer: katomation <noreply@kroger.com>
           author: katomation <automation@user.noreply.kroger.com>
           signoff: false
-          base: main
+          base: main #dont need base
           branch: automation/version-bump-${{github.event.inputs.sdk}}-${{steps.global_data.outputs.date}}
           delete-branch: true
           title: "[Automation] Bump ${{github.event.inputs.sdk}} to ${{github.event.inputs.version}}"
